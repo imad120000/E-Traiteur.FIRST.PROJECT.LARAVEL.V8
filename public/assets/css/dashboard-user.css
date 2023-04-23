@@ -1,0 +1,23 @@
+.file-input{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: 25px !important;
+  color: #8f8f8f;
+  border: solid 1px var(--border-color);
+  font-size: 0.8rem;
+  padding: .4rem .8rem;
+  cursor: pointer;
+  transition: background 150ms ease-in, color 150ms ease-in;
+}
+.file-input:hover{
+  color: #fff;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.modal table tr td:nth-child(1){
+  white-space: nowrap;
+  padding-right: .8rem;
+}
