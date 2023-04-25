@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
+use App\Models\AnnonceAdmin;
 use App\Models\Classment;
 use App\Models\User;
 use App\Models\demande;
@@ -120,12 +121,73 @@ class AdminController extends Controller
     }
 
     public function annonce(){
-        return view('admin.annonce');
+        $annonce = AnnonceAdmin::all();
+        return view('admin.annonce',[
+            'annonce'=>$annonce,
+        ]);
     }
 
-    public function addannonce(){
+    public function addannonce(Request $request){
+
+        $request->validate([
+            'centenu'=>'required',
+            'title'=>'required',
+            'image'=>'required',
+            
+        ]);
+        
+        if($request->hasFile('image'))
+        { 
+            $file = $request->file('image');
+            $image = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('annonceadmin'), $image);
+        }
+        
+        $annonce = new AnnonceAdmin();
+        $annonce->title = $request->input('title');
+        $annonce->centenu = $request->input('centenu');
+        $annonce->image = $image;
+        $annonce->save();
+        
+        return redirect()->back()->with('success', true);
         
     }
 
     
+
+    public function updateannonce(Request $request,$id){
+
+            $annonce_ = AnnonceAdmin::findOrFail($id);
+            if($request->hasFile('imageU'))
+                    { 
+                        $file_ = $request->file('imageU');
+                        $image_ = time().'_'.$file_->getClientOriginalName();
+                        $file_->move(public_path('annonceadmin'), $image_);
+                        unlink(public_path('annonceadmin').'/'.$annonce_->image); //delete ancien image
+                    
+                    
+                    $annonce_->update([
+                        'title' => $request['titleU'],
+                        'centenu' => $request['centenuU'],
+                        'image' => $image_, // include the updated image name here
+                    ]);
+                } 
+            
+
+     
+            return redirect()->back();
+    }
+    
+    public function deleteannonce($id){
+
+        $delete = Annonceadmin::findOrFail($id)->first();
+        unlink(public_path('./annonceadmin/').$delete->image);
+        $delete->delete();
+        return redirect()->back()->with('success', true);
+
+    }
+
+    
 }
+
+

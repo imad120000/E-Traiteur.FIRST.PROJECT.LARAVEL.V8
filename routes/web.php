@@ -107,6 +107,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
         //Annonce Admin for page Home
         Route::get('/annonce',[AdminController::class,'annonce'])->name('annonce');
         Route::post('/annonce',[AdminController::class,'addannonce'])->name('addannonce');
+        Route::post('/annonce/{id}',[AdminController::class,'updateannonce'])->name('updateannonce');
+        Route::Delete('/annonce/{id}',[AdminController::class,'deleteannonce'])->name('deleteannonce');
+
+        
+
+
 
 
 
