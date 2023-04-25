@@ -110,6 +110,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/annonce/{id}',[AdminController::class,'updateannonce'])->name('updateannonce');
         Route::Delete('/annonce/{id}',[AdminController::class,'deleteannonce'])->name('deleteannonce');
 
+        //activation compte
+        Route::get('/account-activation',[AdminController::class,'activecompte'])->name('activecompte');
+
+
         
 
 

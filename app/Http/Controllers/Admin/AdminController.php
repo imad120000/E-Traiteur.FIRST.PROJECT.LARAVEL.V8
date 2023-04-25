@@ -48,6 +48,8 @@ class AdminController extends Controller
        return redirect('admin/login');
    }
 
+
+    // Page profile Statistique
     public function profile(){
         //statistique for les demandes
 
@@ -120,6 +122,7 @@ class AdminController extends Controller
         ]);
     }
 
+    // Page Annonce 
     public function annonce(){
         $annonce = AnnonceAdmin::all();
         return view('admin.annonce',[
@@ -153,8 +156,6 @@ class AdminController extends Controller
         
     }
 
-    
-
     public function updateannonce(Request $request,$id){
 
             $annonce_ = AnnonceAdmin::findOrFail($id);
@@ -177,7 +178,7 @@ class AdminController extends Controller
      
             return redirect()->back();
     }
-    
+
     public function deleteannonce($id){
 
         $delete = Annonceadmin::findOrFail($id)->first();
@@ -185,6 +186,11 @@ class AdminController extends Controller
         $delete->delete();
         return redirect()->back()->with('success', true);
 
+    }
+
+    //Page Activaion Compte
+    public function activecompte(){
+        return view('admin.account-activation');
     }
 
     
