@@ -112,6 +112,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
         //activation compte
         Route::get('/account-activation',[AdminController::class,'activecompte'])->name('activecompte');
+        Route::post('/account-activation/{id}',[AdminController::class,'active'])->name('active');
+        Route::delete('/account-activation/{id}',[AdminController::class,'deletecompte'])->name('deletecompte');
+
+
 
 
         

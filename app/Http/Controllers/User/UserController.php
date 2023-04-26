@@ -103,13 +103,7 @@ class UserController extends Controller
         $user->ville_id = $request->ville_id;
         $user->save(); 
 
-        $facture = new facture();
-        $facture->user_id=$user->id;
-        $facture->des="Abonnement annuel";
-        $facture->status="Payé";
-        $facture->montant=100;
-        $facture->save();
-
+       
 
 
 

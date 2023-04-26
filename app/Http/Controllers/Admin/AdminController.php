@@ -190,7 +190,37 @@ class AdminController extends Controller
 
     //Page Activaion Compte
     public function activecompte(){
-        return view('admin.account-activation');
+        $compte = User::with('ville','service')
+        ->where('compte',0)
+        ->get();
+        return view('admin.account-activation',['compte'=>$compte]);
+    }
+
+    public function active($id){
+
+        $compte = User::where('id',$id)->first();
+        $compte->update([
+            'compte' => 1,
+        ]);
+
+        $facture = new facture();
+        $facture->user_id=$id;
+        $facture->des="Abonnement annuel";
+        $facture->status="Payé";
+        $facture->montant=100;
+        $facture->save();
+
+        return redirect()->back();
+    }
+
+    public function deletecompte($id){
+        $delete = User::where('id',$id)->first();
+        unlink(public_path('./cin1/').$delete->cinDocument1);
+        unlink(public_path('./cin2/').$delete->cinDocument2);
+        unlink(public_path('./profile/').$delete->profileDocument);
+        unlink(public_path('./status/').$delete->statusDocument);
+        $delete->delete();
+        return redirect()->back();
     }
 
     
