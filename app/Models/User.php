@@ -64,5 +64,13 @@ class User extends Authenticatable
         return $this->belongsTo(Annonce::class);
     }
 
+    public function classment()
+    {
+        return $this->belongsTo(Classment::class);
+    }
+    
+
+
+
 
 }

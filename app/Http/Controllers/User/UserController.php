@@ -306,6 +306,8 @@ public function show()
 
      public function deletepost($id) {
         $annonce = Annonce::findOrFail($id);
+        $classment = Classment::where('user_id',auth()->user()->id);
+        
         
         if ($annonce->photo) {
             $photos = json_decode($annonce->photo, true);
@@ -318,6 +320,7 @@ public function show()
         }
     
         $annonce->delete();
+        $classment->delete();
         return redirect()->back()->with('success', true);
 
     }
@@ -327,6 +330,7 @@ public function show()
 
        public function publicite(){
         //en affiche les classment deponible entre 1 and 10 par ville and service
+        $annonce = Annonce::where('user_id',auth()->user()->id)->count();
 
         if (auth()->check()) {
             //user auth
@@ -354,7 +358,7 @@ public function show()
                             ->get();
 
 
-                            return view('user.publicite',['rank'=>$rankDespo]);
+                            return view('user.publicite',['rank'=>$rankDespo,'annonce'=>$annonce]);
                         }
 
 
@@ -362,14 +366,23 @@ public function show()
 
        public function demandeclassment(Request $request){
 
-            $user = auth()->user();
+        $user = auth()->user();
+        $annonce = Annonce::where('user_id',$user->id)->count();
+    
+        if($annonce >0){        
             $classemnt = new Classment();
             $classemnt->user_id=$user->id;
             $classemnt->service_id=$user->service_id;
             $classemnt->classment=$request['rank'];
             $classemnt->save();
-
             return redirect()->back()->with('success', true);
+
+        }else{
+            return redirect()->back()->with('fail', 'this not exist');
+
+        }
+            
+
 
        }
 

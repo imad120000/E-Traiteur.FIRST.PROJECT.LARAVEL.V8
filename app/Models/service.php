@@ -18,5 +18,10 @@ class service extends Model
     {
         return $this->hasMany(Annonce::class);
     }
+    
+    public function classments()
+    {
+        return $this->hasMany(Classment::class);
+    }
 
 }

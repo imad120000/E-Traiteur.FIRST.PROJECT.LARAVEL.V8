@@ -120,6 +120,7 @@
               <p class="text-muted">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus aspernatur quae perferendis quidem exercitationem corrupti esse nam vitae inventore quaerat ullam voluptatum.
               </p>
+              <p class="text-danger">you Must have poste for can demande classment</p>
               <form class="d-flex flex-column" action="{{route('user.demandeclassment')}}" method="POST">
                 @csrf
                 <section class="dashboard__table-de-bord">
@@ -158,7 +159,9 @@
                 </section>
                 <div class="btn-group fit-content ms-auto" role="group">
                   <button type="reset" class="btn btn-default dashboard__tdb-btn-default bg-white">Annuler</button>
-                  <button type="submit" class="btn btn-primary rounded-0" data-bs-toggle="modal" data-bs-target="#exampleModal">Commander</button>
+                  @if($annonce != 0)
+                    <button type="submit" class="btn btn-primary rounded-0" data-bs-toggle="modal" data-bs-target="#exampleModal">Commandé</button>
+                  @endif
                 </div>
               </form>
             </div>

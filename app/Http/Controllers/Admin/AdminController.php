@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
+use App\Models\Annonce;
 use App\Models\AnnonceAdmin;
 use App\Models\Classment;
 use App\Models\User;
@@ -221,6 +222,114 @@ class AdminController extends Controller
         unlink(public_path('./status/').$delete->statusDocument);
         $delete->delete();
         return redirect()->back();
+    }
+
+    //Page Classment
+    public function classment(){
+       $classment = classment::with('service','user')
+       ->where('status','En attente')
+       ->get();
+       return view('admin.utilisateur-classment',['classment'=>$classment]);
+    }
+
+    public function activeclassment($id){
+
+        $classment = classment::where('id',$id)->first();
+        $classment->update([
+            'status'=>'accepté',  
+        ]);
+
+        $annonceclassment = Annonce::where('user_id',$classment->user_id);
+        $annonceclassment->update([
+            'classment'=>$classment->classment,  
+        ]); 
+
+        if($classment->classment == 1){
+            $facture = new facture();
+            $facture->user_id=$classment->user_id;
+            $facture->des="Rank".$classment->classment;
+            $facture->status="Payé";
+            $facture->montant=5300;
+            $facture->save();
+        }
+        else if($classment->classment == 2){
+            $facture = new facture();
+            $facture->user_id=$classment->user_id;
+            $facture->des="Rank".$classment->classment;
+            $facture->status="Payé";
+            $facture->montant=4500;
+            $facture->save();
+        }
+        else if($classment->classment == 3){
+            $facture = new facture();
+            $facture->user_id=$classment->user_id;
+            $facture->des="Rank".$classment->classment;
+            $facture->status="Payé";
+            $facture->montant=3900;
+            $facture->save();
+        }
+        else if($classment->classment == 4){
+            $facture = new facture();
+            $facture->user_id=$classment->user_id;
+            $facture->des="Rank".$classment->classment;
+            $facture->status="Payé";
+            $facture->montant=3000;
+            $facture->save();
+        }
+        else if($classment->classment == 5){
+            $facture = new facture();
+            $facture->user_id=$classment->user_id;
+            $facture->des="Rank".$classment->classment;
+            $facture->status="Payé";
+            $facture->montant=2800;
+            $facture->save();
+        }
+        else if($classment->classment == 6){
+            $facture = new facture();
+            $facture->user_id=$classment->user_id;
+            $facture->des="Rank".$classment->classment;
+            $facture->status="Payé";
+            $facture->montant=2500;
+            $facture->save();
+        }
+        else if($classment->classment == 7){
+            $facture = new facture();
+            $facture->user_id=$classment->user_id;
+            $facture->des="Rank".$classment->classment;
+            $facture->status="Payé";
+            $facture->montant=2000;
+            $facture->save();
+        }
+        else if($classment->classment == 8){
+            $facture = new facture();
+            $facture->user_id=$classment->user_id;
+            $facture->des="Rank".$classment->classment;
+            $facture->status="Payé";
+            $facture->montant=1700;
+            $facture->save();
+        }
+        else if($classment->classment == 9){
+            $facture = new facture();
+            $facture->user_id=$classment->user_id;
+            $facture->des="Rank".$classment->classment;
+            $facture->status="Payé";
+            $facture->montant=1300;
+            $facture->save();
+        }
+        else if($classment->classment == 10){
+            $facture = new facture();
+            $facture->user_id=$classment->user_id;
+            $facture->des="Rank".$classment->classment;
+            $facture->status="Payé";
+            $facture->montant=1000;
+            $facture->save();
+        }
+        
+        
+
+ 
+        return redirect()->back();
+
     }
 
     
