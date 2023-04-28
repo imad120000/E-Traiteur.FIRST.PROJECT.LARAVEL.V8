@@ -282,21 +282,23 @@ public function show()
                         unlink(public_path('postimage').'/'.$oldPhoto);
                     }
                 }
-            }
-        
+            } 
             $annonce->update([
-                'title' => $request['title'],
-                'des' => $request['des'],
-                
                 'photo' => json_encode($photos),
-                'video' => $request['video'],
             ]); 
-
-            $user = User::where('id',auth()->id());
-            $user->update([
-                'tele' => $request['tele'],    
-            ]);
+      
         }
+
+        $annonce->update([
+            'title' => $request['title'],
+            'des' => $request['des'],
+            'video' => $request['video'],
+        ]); 
+
+        $user = User::where('id',auth()->id());
+        $user->update([
+            'tele' => $request['tele'],    
+        ]);
 
     
         return redirect()->back()->with('success', true);

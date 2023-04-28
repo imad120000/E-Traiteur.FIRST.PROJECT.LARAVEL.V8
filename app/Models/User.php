@@ -68,6 +68,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Classment::class);
     }
+
+    public function demandes(){
+        
+        return $this->hasMany(demande::class);
+    }
     
 
 

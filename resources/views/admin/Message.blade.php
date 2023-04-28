@@ -54,16 +54,16 @@
                         <div class="collapse dashboard__sidebar-collapse show" id="demandes">
                             <ul class="nav flex-column ps-3">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Activation de compte</a>
+                                    <a class="nav-link " href="#">Activation de compte</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="ajout-service">Classment </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="ajout-service">Message </a>
+                                    <a class="nav-link active" href="ajout-service">Message </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="autre-demande">Autre demandes</a>
+                                    <a class="nav-link" href="autre-demande">Autre demandes</a>
                                 </li>
                             </ul>
                         </div>
@@ -130,84 +130,81 @@
             <!-- main content -->
             <div class="main__content">
                 <div class="container">
-                    <h1 class="text-center dashboard__title">Demande</h1>
+                    <h1 class="text-center dashboard__title">Message</h1>
                     <section class="dashboard__table-de-bord">
                         <article class="dashboard__table-de-bord-body">
                             <table class="table table-bordered dashboard__tdb-table">
                                 <thead>
                                     <tr class="text-center">
-                                        <th>Utilisateurs</th>
-                                        <th>Objet</th>
-                                        <th>Message</th>
+                                        <th>Email</th>
+                                        <th>Centenu</th>
                                         <th>Date Demande</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                @foreach ($autre as $a)
+                                @foreach ($message as $m)
                                     <tbody>
                                         <tr class="text-center">
-                                            <td>{{ $a->user->name }} {{ $a->user->prenom }}</td>
-                                            <td class="truncate">{{ $a->objet }}</td>
-                                            <td class="truncate">{{ $a->Message }}</td>
-                                            <td>{{ $a->created_at }}</td>
+                                            <td>{{ $m->email }}</td>
+                                            <td class="truncate">{{ $m->objet }}</td>
+                                            <td>{{ $m->created_at }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
                                                     <button class="btn dashboard__tdb-btn show-message mx-2"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target="#modal-show-message-4{{ $a->id }}">
+                                                        data-bs-target="#modal-show-message-4{{ $m->id }}">
                                                         <i class="ti-eye"></i>
                                                     </button>
                                                     <button class="btn dashboard__tdb-btn" data-bs-toggle="modal"
-                                                        data-bs-target="#confirm-delete-message-4{{ $a->id }}">
+                                                        data-bs-target="#confirm-delete-message-4{{ $m->id }}">
                                                         <i class="ti-trash"></i>
                                                     </button>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
-                                @endforeach 
+                                @endforeach
                             </table>
                         </article>
                         {{-- Delete Message --}}
-                           @foreach ($autre as $t)
-                            <form method="post" action="{{ route('admin.deletedemande', $t->id) }}">
-                                @csrf
-                                @method('DELETE')
-                                <div class="modal fade" id="confirm-delete-message-4{{ $t->id }}"
-                                    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                                        style="min-width: 45rem;">
-                                        <div class="modal-content rounded-0 bg-main border-0">
-                                            <div class="modal-header border-0">
-                                                <h1 class="modal-title fs-5 text-primary text-center w-100"
-                                                    id="confirmModalLabel">
-                                                    Confirmer votre action
-                                                </h1>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p class="text-center">
-                                                    <span>Vous êtes sure ?</span>
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-default dashboard__tdb-btn-default"
-                                                    data-bs-dismiss="modal">
-                                                    Annuler
-                                                </button>
-                                                <button type="submit"
-                                                    class="btn btn-primary rounded-0 btn-delete-message">
-                                                    Confirmer
-                                                </button>
-                                            </div>
+                        @foreach ($message as $t)
+                        <form method="post" action="{{route('admin.deletemessage',$t->id)}}">
+                            @csrf
+                            @method('DELETE')
+                            <div class="modal fade" id="confirm-delete-message-4{{$t->id}}" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                    style="min-width: 45rem;">
+                                    <div class="modal-content rounded-0 bg-main border-0">
+                                        <div class="modal-header border-0">
+                                            <h1 class="modal-title fs-5 text-primary text-center w-100"
+                                                id="confirmModalLabel">
+                                                Confirmer votre action
+                                            </h1>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-center">
+                                                <span>Vous êtes sure ?</span>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default dashboard__tdb-btn-default"
+                                                data-bs-dismiss="modal">
+                                                Annuler
+                                            </button>
+                                            <button type="submit" class="btn btn-primary rounded-0 btn-delete-message">
+                                                Confirmer
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        @endforeach 
+                            </div>
+                        </form>
+                        @endforeach
 
                         {{--  show message --}}
-                         @foreach ($autre as $d)
+                        @foreach ($message as $d)
                             <div class="modal fade" id="modal-show-message-4{{ $d->id }}" tabindex="-1"
                                 data-bs-backdrop="static" aria-labelledby="showModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
@@ -221,18 +218,13 @@
                                         <div class="modal-body">
                                             <table class="table table-bordered border-main m-0">
                                                 <tr>
-                                                    <th>Utilisateurs</th>
-                                                    <td>{{ $d->user->name }} {{ $d->user->prenom }}</td>
+                                                    <th>Email</th>
+                                                    <td>{{ $d->email }}</td>
                                                 </tr>
-                                                <tr>
-                                                  <th>Objet</th>
-                                                  <td>{{ $d->objet }}</td>
-                                              </tr>
                                                 <tr>
                                                     <th>Message</th>
-                                                    <td>{{ $d->Message }}</td>
+                                                    <td>{{ $d->objet }}</td>
                                                 </tr>
-
                                             </table>
                                         </div>
                                         <div class="modal-footer">
@@ -244,7 +236,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach 
+                        @endforeach
                     </section>
                 </div>
             </div>

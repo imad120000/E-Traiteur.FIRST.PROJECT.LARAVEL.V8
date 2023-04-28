@@ -118,7 +118,7 @@
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus aspernatur quae perferendis quidem exercitationem corrupti esse nam vitae inventore quaerat ullam voluptatum facilis corporis, quia sint rerum dignissimos iure, debitis voluptates saepe, iste autem ipsam beatae sapiente.
               </p>
               <p class="text-muted">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus aspernatur quae perferendis quidem exercitationem corrupti esse nam vitae inventore quaerat ullam voluptatum.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </p>
               <p class="text-danger">you Must have poste for can demande classment</p>
               <form class="d-flex flex-column" action="{{route('user.demandeclassment')}}" method="POST">
@@ -228,9 +228,9 @@
                   <p>RANK 1 designe la position 1 dans le classment des préstataires.</p>
                   <p>Remarque: Si vous avez commandé le RANK 10 et vous êtes le seul des préstataires qui a commandé un service RANK, vous seriez affiché en première position.
                     <br>
-                    votre <strong> Ville : {{auth()->user()->Ville->name}}</strong>
+                    <strong> Ville : {{auth()->user()->Ville->name}}</strong>
                     <br>
-                    votre <strong> Service : {{auth()->user()->service->name}}</strong>
+                     <strong> Service : {{auth()->user()->service->name}}</strong>
 
                    
                   </p>

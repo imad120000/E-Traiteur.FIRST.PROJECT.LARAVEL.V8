@@ -18,12 +18,18 @@ use App\Http\Controllers\User\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
-Route::get('/details/{id}', [UserController::class, 'annonce']);
+Route::get('/', [AdminController::class, 'home'])->name('home');
+Route::get('/recherche', [AdminController::class, 'searche'])->name('searche');
+Route::post('/recherche', [AdminController::class, 'search'])->name('search');
+
+
+
+
+
+
+Route::get('/details/{id}', [UserController::class, 'annonce'])->name('details');
 
 
 
@@ -33,22 +39,23 @@ Route::get('/details/{id}', [UserController::class, 'annonce']);
 
 //User
 
+//envoyé message
+Route::post('/', [AdminController::class, 'envoye'])->name('envoye');
 
- Route::prefix('user')->name('user.')->group(function(){
-       
-    Route::middleware(['guest:web','PreventBackHistory'])->group(function(){
-       // return view('login'); 
-        
-          Route::view('/active','user.active')->name('active');
-          Route::view('/login','user.login')->name('login');
-          Route::view('/register','user.register')->name('register');
-          Route::post('/check',[UserController::class,'check'])->name('check');
-          Route::post('/create',[UserController::class,'create'])->name('create');
+Route::prefix('user')->name('user.')->group(function () {
+
+    Route::middleware(['guest:web', 'PreventBackHistory'])->group(function () {
+        // return view('login'); 
+        Route::view('/active', 'user.active')->name('active');
+        Route::view('/login', 'user.login')->name('login');
+        Route::view('/register', 'user.register')->name('register');
+        Route::post('/check', [UserController::class, 'check'])->name('check');
+        Route::post('/create', [UserController::class, 'create'])->name('create');
     });
 
-     Route::middleware(['auth:web','PreventBackHistory'])->group(function(){
+    Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
         //return all page for the user
-        
+
         //Statistique for view post , annonce link visit
         Route::get('/profile', [UserController::class, 'show'])->name('tableu');
 
@@ -76,48 +83,60 @@ Route::get('/details/{id}', [UserController::class, 'annonce']);
 
 
 
-       
-        Route::view('/new-password','user.new-password')->name('new-password');
-        Route::view('/statistiques','user.statistiques')->name('statistiques');
+
+        Route::view('/new-password', 'user.new-password')->name('new-password');
+        Route::view('/statistiques', 'user.statistiques')->name('statistiques');
         //logout
-        Route::post('/logout',[UserController::class,'logout'])->name('logout');
+        Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 
 
         //Route::post('/logout',[AdminController::class,'logout'])->name('logout');
     });
+});
 
-}); 
 
- 
-Route::prefix('admin')->name('admin.')->group(function(){
-       
-    Route::middleware(['guest:admin','PreventBackHistory'])->group(function(){
-       // return view('login'); 
+Route::prefix('admin')->name('admin.')->group(function () {
 
-          Route::view('/login','admin.login')->name('login');
-          Route::post('/check',[AdminController::class,'check'])->name('check');
+    Route::middleware(['guest:admin', 'PreventBackHistory'])->group(function () {
+        // return view('login'); 
+
+        Route::view('/login', 'admin.login')->name('login');
+        Route::post('/check', [AdminController::class, 'check'])->name('check');
     });
 
-     Route::middleware(['auth:admin','PreventBackHistory'])->group(function(){
+    Route::middleware(['auth:admin', 'PreventBackHistory'])->group(function () {
 
         //Profile (satatistique)
-        Route::get('/profile',[AdminController::class,'profile'])->name('profile');
+        Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
 
         //Annonce Admin for page Home
-        Route::get('/annonce',[AdminController::class,'annonce'])->name('annonce');
-        Route::post('/annonce',[AdminController::class,'addannonce'])->name('addannonce');
-        Route::post('/annonce/{id}',[AdminController::class,'updateannonce'])->name('updateannonce');
-        Route::Delete('/annonce/{id}',[AdminController::class,'deleteannonce'])->name('deleteannonce');
+        Route::get('/annonce', [AdminController::class, 'annonce'])->name('annonce');
+        Route::post('/annonce', [AdminController::class, 'addannonce'])->name('addannonce');
+        Route::post('/annonce/{id}', [AdminController::class, 'updateannonce'])->name('updateannonce');
+        Route::Delete('/annonce/{id}', [AdminController::class, 'deleteannonce'])->name('deleteannonce');
 
         //activation compte
-        Route::get('/account-activation',[AdminController::class,'activecompte'])->name('activecompte');
-        Route::post('/account-activation/{id}',[AdminController::class,'active'])->name('active');
-        Route::delete('/account-activation/{id}',[AdminController::class,'deletecompte'])->name('deletecompte');
+        Route::get('/account-activation', [AdminController::class, 'activecompte'])->name('activecompte');
+        Route::post('/account-activation/{id}', [AdminController::class, 'active'])->name('active');
+        Route::delete('/account-activation/{id}', [AdminController::class, 'deletecompte'])->name('deletecompte');
 
         //classment
-        Route::get('/utilisateur-classment',[AdminController::class,'classment'])->name('classment');
-        Route::post('/utilisateur-classment/{id}',[AdminController::class,'activeclassment'])->name('activeclassment');
+        Route::get('/utilisateur-classment', [AdminController::class, 'classment'])->name('classment');
+        Route::post('/utilisateur-classment/{id}', [AdminController::class, 'activeclassment'])->name('activeclassment');
+
+        //Message
+        Route::get('/Message', [AdminController::class, 'message'])->name('message');
+        Route::delete('/Message/{id}', [AdminController::class, 'deletemessage'])->name('deletemessage');
+
+        //Autre demande
+        Route::get('/autre-demande', [AdminController::class, 'autredemande'])->name('autredemande');
+        Route::delete('/autre-demande/{id}', [AdminController::class, 'deletedemande'])->name('deletedemande');
+
+        //Document
+        Route::get('/utilisateur-document', [AdminController::class, 'document'])->name('document');
+        Route::delete('/utilisateur-document/{id}', [AdminController::class, 'deletecompte'])->name('deletecompte');
+        Route::post('/utilisateur-document', [AdminController::class, 'recherche'])->name('recherche');
 
 
 
@@ -125,16 +144,22 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
 
 
-        
+
+
+
+
+
+
+
+
 
 
 
 
 
         //logout
-        Route::post('/logout',[AdminController::class,'logout'])->name('logout');
+        Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 
         //Route::post('/logout',[AdminController::class,'logout'])->name('logout');
     });
-
-}); 
+});
