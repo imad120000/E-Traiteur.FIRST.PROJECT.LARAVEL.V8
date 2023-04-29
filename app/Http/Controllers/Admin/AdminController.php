@@ -187,7 +187,7 @@ class AdminController extends Controller
     public function deleteannonce($id)
     {
 
-        $delete = Annonceadmin::findOrFail($id)->first();
+        $delete = Annonceadmin::findOrFail($id);
         unlink(public_path('./annonceadmin/') . $delete->image);
         $delete->delete();
         return redirect()->back()->with('success', true);
@@ -222,7 +222,7 @@ class AdminController extends Controller
 
     public function deletecompte($id)
     {
-        $delete = User::where('id', $id)->first();
+        $delete = User::where('id', $id);
         unlink(public_path('./cin1/') . $delete->cinDocument1);
         unlink(public_path('./cin2/') . $delete->cinDocument2);
         unlink(public_path('./profile/') . $delete->profileDocument);
@@ -408,12 +408,12 @@ class AdminController extends Controller
     }
 
     //Home
-
     public function home()
     {
         $ville = ville::all();
         $service = service::all();
-        return view('welcome', ['ville' => $ville, 'service' => $service]);
+        $annonceAdmin = AnnonceAdmin::all();
+        return view('welcome', ['ville' => $ville, 'service' => $service,'annonceadmin'=>$annonceAdmin]);
     }
 
     public function searche()
@@ -423,7 +423,7 @@ class AdminController extends Controller
 
         return view('recherche', ['ville' => $ville, 'service' => $service]);
     }
-    
+
     //Page recherche
     public function search(Request $request)
     {
@@ -458,6 +458,4 @@ class AdminController extends Controller
             'annonce' => $annonce,
         ]);
     }
-
-
 }

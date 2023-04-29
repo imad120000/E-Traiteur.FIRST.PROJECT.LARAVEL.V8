@@ -60,6 +60,49 @@
             width: 2rem;
             height: 2rem;
         }
+
+        .btn-cta {
+            border: solid #fff 1px;
+            border-radius: 25px;
+            padding-left: 25px !important;
+            padding-right: 25px !important;
+            animation: shadow-pulse 600ms linear infinite;
+            margin: 0 15px;
+        }
+
+        .btn-cta:hover {
+            animation: none;
+            border: solid #fff 1px;
+            background-color: #fff;
+            color: var(--bs-dark);
+        }
+
+        @keyframes shadow-pulse {
+            0% {
+                box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.9);
+            }
+
+            20% {
+                transform: rotate(3deg);
+            }
+
+            40% {
+                transform: rotate(-3deg);
+            }
+
+            60% {
+                transform: rotate(3deg);
+            }
+
+            80% {
+                transform: rotate(-3deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+        }
     </style>
 </head>
 
@@ -79,8 +122,8 @@
                     <div class="collapse navbar-collapse" id="navBarCollapsable">
                         <ul class="navbar-nav w-100 align-items-center">
                             <li class="nav-item ms-0 ms-lg-auto"><a class="nav-link" href="#">Aide</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('user.register') }}">Nous
-                                    rejoindre</a></li>
+                            <li class="nav-item"><a class="nav-link btn btn-cta"
+                                    href="{{ route('user.register') }}">Nous rejoindre</a>
                             <li class="nav-item"><a class="nav-link" href="#">Apropo de nous</a></li>
                             <li class="nav-item dropdown-center me-0 me-lg-auto">
                                 <a class="nav-link dropdown-toggle laguange__pref-choise" role="button" href="#"

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="vendor/css/themify-icons.css">
     <style>
-      .nav-item.dropdown-center .dropdown-menu {
+        .nav-item.dropdown-center .dropdown-menu {
             padding: 0;
             min-width: auto;
         }
@@ -30,7 +30,8 @@
 
         .nav-item.dropdown-center .dropdown-toggle::after {
             content: none;
-        } 
+        }
+
         .laguange__pref {
             width: 2.5rem;
             height: 2.5rem;
@@ -39,6 +40,48 @@
         .language_icon {
             width: 2rem;
             height: 2rem;
+        }
+        .btn-cta {
+            border: solid #fff 1px;
+            border-radius: 25px;
+            padding-left: 25px !important;
+            padding-right: 25px !important;
+            animation: shadow-pulse 600ms linear infinite;
+            margin: 0 15px;
+        }
+
+        .btn-cta:hover {
+            animation: none;
+            border: solid #fff 1px;
+            background-color: #fff;
+            color: var(--bs-dark);
+        }
+
+        @keyframes shadow-pulse {
+            0% {
+                box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.9);
+            }
+
+            20% {
+                transform: rotate(3deg);
+            }
+
+            40% {
+                transform: rotate(-3deg);
+            }
+
+            60% {
+                transform: rotate(3deg);
+            }
+
+            80% {
+                transform: rotate(-3deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
         }
     </style>
 </head>
@@ -59,7 +102,7 @@
                 <div class="collapse navbar-collapse" id="navBarCollapsable">
                     <ul class="navbar-nav w-100 align-items-center">
                         <li class="nav-item ms-0 ms-lg-auto"><a class="nav-link" href="#">Aide</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('user.register') }}">Nous rejoindre</a>
+                        <li class="nav-item"><a class="nav-link btn btn-cta" href="{{ route('user.register') }}">Nous rejoindre</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="#">Apropo de nous</a></li>
                         <li class="nav-item dropdown-center me-0 me-lg-auto">
@@ -205,30 +248,27 @@
         </section>
 
         <section class="page__section">
+
             <div id="annonceCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="assets/images/carousel.png" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="slide__title">First slide label</h5>
-                            <p class="slide__text">Some representative placeholder content for the first slide.</p>
-                        </div>
+                    <div class="carousel-inner" style="height: 300px;width: 100%;text-align: center" >
+                        <?php
+                        foreach ($annonceadmin as $key => $photo) {
+                            $image_url = asset('annonceadmin/' . $photo->image);
+                            ?>
+                          <div class="carousel-item  <?php echo $key == 0 ? 'active' : ''; ?>" style="height: 300px;width: 100%;text-align: center" >
+                                  <img src="<?php echo $image_url; ?>" class="img-fluid carousel-image" alt="...">
+                                  <div class="carousel-caption d-none d-md-block">
+                                      <h5 class="slide__title"><strong>{{$photo->title}}</strong></h5>
+                                      <p class="slide__text">{{$photo->centenu}}</p>
+                                  </div>
+                          </div>
+
+                          <?php
+                        }
+                        ?>
+                        
                     </div>
-                    <div class="carousel-item">
-                        <img src="assets/images/carousel.png" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="slide__title">First slide label</h5>
-                            <p class="slide__text">Some representative placeholder content for the first slide.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="assets/images/carousel.png" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="slide__title">First slide label</h5>
-                            <p class="slide__text">Some representative placeholder content for the first slide.</p>
-                        </div>
-                    </div>
-                </div>
+                
                 <button class="carousel-control-prev" type="button" data-bs-target="#annonceCarousel"
                     data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
