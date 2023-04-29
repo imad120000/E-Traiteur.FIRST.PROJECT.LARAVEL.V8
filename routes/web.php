@@ -23,12 +23,6 @@ use App\Http\Controllers\User\UserController;
 Route::get('/', [AdminController::class, 'home'])->name('home');
 Route::get('/recherche', [AdminController::class, 'searche'])->name('searche');
 Route::post('/recherche', [AdminController::class, 'search'])->name('search');
-
-
-
-
-
-
 Route::get('/details/{id}', [UserController::class, 'annonce'])->name('details');
 
 
@@ -37,11 +31,12 @@ Route::get('/details/{id}', [UserController::class, 'annonce'])->name('details')
 
 
 
-//User
+
 
 //envoyé message
 Route::post('/', [AdminController::class, 'envoye'])->name('envoye');
 
+//User
 Route::prefix('user')->name('user.')->group(function () {
 
     Route::middleware(['guest:web', 'PreventBackHistory'])->group(function () {
@@ -95,7 +90,7 @@ Route::prefix('user')->name('user.')->group(function () {
     });
 });
 
-
+//Admin
 Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['guest:admin', 'PreventBackHistory'])->group(function () {

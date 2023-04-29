@@ -112,7 +112,6 @@
       <div class="main__content">
         <div class="container">
           <h1 class="text-center dashboard__title">Autres demandes</h1>
-
           <section class="dashboard__table-de-bord">
             <article class="dashboard__table-de-bord-body">
               <form class="d-flex flex-column" action="">
