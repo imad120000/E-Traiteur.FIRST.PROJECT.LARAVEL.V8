@@ -444,7 +444,7 @@ class AdminController extends Controller
             $result = Annonce::where('service_id', $serviceId)
                 ->get();
         } else {
-            $result = null;
+            $result = Annonce::all();
         }
 
         return view('recherche', ['ville' => $ville, 'service' => $service, 'result' => $result]);

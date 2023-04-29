@@ -11,7 +11,36 @@
     <link rel="stylesheet" href="assets/css/utility.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="vendor/css/themify-icons.css">
+    <style>
+      .nav-item.dropdown-center .dropdown-menu {
+            padding: 0;
+            min-width: auto;
+        }
 
+        .nav-item.dropdown-center .dropdown-menu li {
+            padding: .2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-item.dropdown-center .dropdown-menu li a {
+            padding: .2rem;
+        }
+
+        .nav-item.dropdown-center .dropdown-toggle::after {
+            content: none;
+        } 
+        .laguange__pref {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+
+        .language_icon {
+            width: 2rem;
+            height: 2rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -33,7 +62,29 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('user.register') }}">Nous rejoindre</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="#">Apropo de nous</a></li>
-                        <li class="nav-item me-0 me-lg-auto"><a class="nav-link" href="#">Eng</a></li>
+                        <li class="nav-item dropdown-center me-0 me-lg-auto">
+                            <a class="nav-link dropdown-toggle laguange__pref-choise" role="button" href="#"
+                                data-bs-toggle="dropdown" aria-expanded="false" id="currentLang" data-lang="fr">
+                                <img class="border-white rounded-pill laguange_pref language_icon"
+                                    src="../assets/images/fr.png" alt="fr-flag">
+                            </a>
+                            <ul class="dropdown-menu laguange__pref-dropdown" id="otherLang">
+                                <li>
+                                    <a class="dropdown-item laguange__pref-choise" onclick="langChange(this)"
+                                        href="#" data-lang="ar">
+                                        <img class="border-white rounded-pill laguange_pref language_icon"
+                                            src="../assets/images/ar.png" alt="ar-flag">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item laguange__pref-choise" onclick="langChange(this)"
+                                        href="#" data-lang="en">
+                                        <img class="border-white rounded-pill laguange_pref language_icon"
+                                            src="../assets/images/en.png" alt="en-flag">
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item ms-5">
                             <ul class="nav">
                                 <li class="nav-item">
