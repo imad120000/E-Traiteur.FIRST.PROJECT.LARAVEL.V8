@@ -43,7 +43,7 @@ Route::prefix('user')->name('user.')->group(function () {
         // return view('login'); 
         Route::view('/active', 'user.active')->name('active');
         Route::view('/login', 'user.login')->name('login');
-        Route::view('/register', 'user.register')->name('register');
+        Route::get('/register', [UserController::class, 'register'])->name('register');
         Route::post('/check', [UserController::class, 'check'])->name('check');
         Route::post('/create', [UserController::class, 'create'])->name('create');
     });

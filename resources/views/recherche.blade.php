@@ -156,6 +156,7 @@
                     </div>
                 </div>
             </nav>
+
             <div class="pt-5">
                 <div class="container d-flex flex-column align-items-center py-5">
                     <h2 class="text-center fw-bold mb-3">Chercher un autre service ou une autre ville!</h2>
@@ -179,6 +180,7 @@
                     </form>               
                 </div>
             </div>
+
         </section>
     </header>
     <main>
@@ -201,8 +203,9 @@
                         Not Found
                     </h1>
                 @else
-                    @foreach ($result as $r)
+                  
                         <div class="row">
+                            @foreach ($result as $r)
                             <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                                 <a class="text-dark" style="text-decoration: none;" href="{{route('details',$r->id)}}">
                                     <div class="card p-2 custom-card ">
@@ -221,8 +224,9 @@
                                     </div>
                                 </a>
                             </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                   
                 @endif
             @else
                 <p class="text-center">--------------------------------------------------------------</p>

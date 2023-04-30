@@ -17,6 +17,7 @@ use App\Models\service;
 use App\Models\ville;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\ComparisonMethodDoesNotDeclareBoolReturnTypeException;
 
 class AdminController extends Controller
@@ -413,7 +414,7 @@ class AdminController extends Controller
         $ville = ville::all();
         $service = service::all();
         $annonceAdmin = AnnonceAdmin::all();
-        return view('welcome', ['ville' => $ville, 'service' => $service,'annonceadmin'=>$annonceAdmin]);
+        return view('welcome', ['ville' => $ville, 'service' => $service, 'annonceadmin' => $annonceAdmin]);
     }
 
     public function searche()
@@ -434,17 +435,34 @@ class AdminController extends Controller
         $serviceId = $request->input('service', ''); // Get the service id from the request, or set it as an empty string if it's not set
 
         if (!empty($villeId) && !empty($serviceId)) {
+
             $result = Annonce::where('ville_id', $villeId)
                 ->where('service_id', $serviceId)
+                ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                ->orderByRaw('RAND()')
                 ->get();
+
         } else if (!empty($villeId)) {
+
             $result = Annonce::where('ville_id', $villeId)
-                ->get();
+            ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+            ->orderByRaw('RAND()')
+                    ->get();
+
         } else if (!empty($serviceId)) {
+
             $result = Annonce::where('service_id', $serviceId)
+            ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+            ->orderByRaw('RAND()')
                 ->get();
+
         } else {
-            $result = Annonce::all();
+
+            $result = Annonce::with('user', 'service')
+            ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+            ->orderByRaw('RAND()')
+            ->get();
+
         }
 
         return view('recherche', ['ville' => $ville, 'service' => $service, 'result' => $result]);
@@ -458,4 +476,6 @@ class AdminController extends Controller
             'annonce' => $annonce,
         ]);
     }
+
+    
 }

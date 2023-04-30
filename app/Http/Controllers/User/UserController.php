@@ -10,6 +10,8 @@ use App\Models\facture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\ville;
+use App\Models\service;
 use App\Models\visit;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
@@ -409,6 +411,14 @@ public function show()
     $facture = facture::where('user_id',auth()->user()->id)
                 ->get();
     return view('user.facture',['facture'=>$facture]);
+   }
+
+   //user.register
+   public function register(){
+    $ville = ville::all();
+    $service = service::all();
+    return view('user.register',['ville'=>$ville,'service'=>$service]);
+
    }
     
         
