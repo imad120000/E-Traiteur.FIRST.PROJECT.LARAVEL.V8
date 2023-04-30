@@ -20,6 +20,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\ComparisonMethodDoesNotDeclareBoolReturnTypeException;
 
+
 class AdminController extends Controller
 {
 
@@ -437,32 +438,31 @@ class AdminController extends Controller
         if (!empty($villeId) && !empty($serviceId)) {
 
             $result = Annonce::where('ville_id', $villeId)
-                ->where('service_id', $serviceId)
-                ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-                ->orderByRaw('RAND()')
-                ->get();
+                        ->where('service_id', $serviceId)
+                        ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                        ->inRandomOrder()
+                        ->get();
 
         } else if (!empty($villeId)) {
 
             $result = Annonce::where('ville_id', $villeId)
-            ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-            ->orderByRaw('RAND()')
-                    ->get();
+                        ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                        ->inRandomOrder()
+                        ->get();
 
         } else if (!empty($serviceId)) {
 
             $result = Annonce::where('service_id', $serviceId)
-            ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-            ->orderByRaw('RAND()')
-                ->get();
+                        ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                        ->inRandomOrder()
+                        ->get();
 
         } else {
 
             $result = Annonce::with('user', 'service')
-            ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-            ->orderByRaw('RAND()')
-            ->get();
-
+                        ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                        ->inRandomOrder()
+                        ->get(); 
         }
 
         return view('recherche', ['ville' => $ville, 'service' => $service, 'result' => $result]);

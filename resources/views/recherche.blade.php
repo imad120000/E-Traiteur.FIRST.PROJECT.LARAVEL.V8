@@ -292,7 +292,7 @@
                             </li>
                         </ul>
                     </div>
-                    <form id="create-emessage" method="post" action="{{ route('envoye') }}">
+                    <form id="create-emessage" method="post" action="">
                         @csrf
                         <div class="input-group mb-2">
                             <input type="email" class="form-control custom-input bg-white" name="email"
