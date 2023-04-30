@@ -18,20 +18,20 @@
     <aside class="dashboard__sidebar">
       <header class="border-bottom px-3 d-flex align-items-center justify-content-between">
         <span class="dashboard__logo">
-          etraiteur 
+          <img src="../assets/images/Logo wight.png" width="150">
         </span>
         <i class="ti-align-right h4 mb-0"></i>
       </header>
       <section class="dashboard__sidebar-nav">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="ps-3 nav-link active" aria-current="page" href="#">
+            <a class="ps-3 nav-link active" aria-current="page" href="{{route('admin.profile')}}">
               <i class="icon ti-layout"></i>
               Tableau de bord
             </a>
           </li>
           <li class="nav-item">
-            <a class="ps-3 nav-link" aria-current="page" href="anonce.html">
+            <a class="ps-3 nav-link" aria-current="page" href="{{route('admin.annonce')}}">
               <i class="icon ti-announcement"></i>
               Anonces
             </a>
@@ -42,19 +42,22 @@
               Demandes
               <i class="ti-angle-down ms-auto"></i>
             </a>
-            <div class="collapse dashboard__sidebar-collapse" id="demandes">
+            <div class="collapse dashboard__sidebar-collapse " id="demandes">
               <ul class="nav flex-column ps-3">
-                <li class="nav-item">
-                  <a class="nav-link" href="account-activation.html">Activation de compte</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="ajout-service.html">Ajout de service</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="autre-demande.html">Autre demandes</a>
-                </li>
+                  <li class="nav-item">
+                      <a class="nav-link " href="{{route('admin.activecompte')}}">Activation de compte</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{route('admin.classment')}}">Classment </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{route('admin.message')}}">Message </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{route('admin.autredemande')}}">Autre demandes</a>
+                  </li>
               </ul>
-            </div>
+          </div>
           </li>
           <li class="nav-item">
             <a class="ps-3 nav-link" href="#utilisateurs" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="utilisateurs">
@@ -65,17 +68,14 @@
             <div class="collapse dashboard__sidebar-collapse" id="utilisateurs">
               <ul class="nav flex-column ps-3">
                 <li class="nav-item">
-                  <a class="nav-link" href="utilisateur-classment.html">Classment</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="utilisateur-document.html">Documents</a>
+                  <a class="nav-link" href="{{route('admin.document')}}">Documents</a>
                 </li>
                 
               </ul>
             </div>
           </li>
           <li class="nav-item">
-            <a class="ps-3 nav-link" href="statistiques.html">
+            <a class="ps-3 nav-link" href="statistiques">
               <i class="icon ti-bar-chart"></i>
               Statistiques
             </a>
@@ -93,7 +93,7 @@
               </button>
               <ul class="dropdown-menu dashboard__navbar-dropdown">
                 <li class="user">
-                  Monsieur <span class="user__name">LeNom</span>
+                  Bonjour <span class="user__name">Admin</span>
                 </li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
@@ -103,7 +103,7 @@
                     Se Deconnecté</a>
                  <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf</form> 
                 </li>
-                <li><a class="dropdown-item" href="change-password.html">
+                <li><a class="dropdown-item" href="">
                   <i class="ti-key"></i>
                   Changer le mot de pass
                 </a></li>

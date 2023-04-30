@@ -18,20 +18,21 @@
         <aside class="dashboard__sidebar">
             <header class="border-bottom px-3 d-flex align-items-center justify-content-between">
                 <span class="dashboard__logo">
-                    etraiteur
+                    <img src="../assets/images/Logo wight.png" width="150">
+
                 </span>
                 <i class="ti-align-right h4 mb-0"></i>
             </header>
             <section class="dashboard__sidebar-nav">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="ps-3 nav-link" aria-current="page" href="profile.html">
+                        <a class="ps-3 nav-link" aria-current="page" href="{{ route('admin.profile') }}">
                             <i class="icon ti-layout"></i>
                             Tableau de bord
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="ps-3 nav-link active" aria-current="page" href="#">
+                        <a class="ps-3 nav-link active" aria-current="page" href="{{ route('admin.annonce') }}">
                             <i class="icon ti-announcement"></i>
                             Anonces
                         </a>
@@ -43,16 +44,20 @@
                             Demandes
                             <i class="ti-angle-down ms-auto"></i>
                         </a>
-                        <div class="collapse dashboard__sidebar-collapse" id="demandes">
+                        <div class="collapse dashboard__sidebar-collapse " id="demandes">
                             <ul class="nav flex-column ps-3">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="account-activation.html">Activation de compte</a>
+                                    <a class="nav-link " href="{{ route('admin.activecompte') }}">Activation de
+                                        compte</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="ajout-service.html">Ajout de service</a>
+                                    <a class="nav-link" href="{{ route('admin.classment') }}">Classment </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="autre-demande.html">Autre demandes</a>
+                                    <a class="nav-link" href="{{ route('admin.message') }}">Message </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.autredemande') }}">Autre demandes</a>
                                 </li>
                             </ul>
                         </div>
@@ -67,10 +72,7 @@
                         <div class="collapse dashboard__sidebar-collapse" id="utilisateurs">
                             <ul class="nav flex-column ps-3">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="utilisateur-classment.html">Classment</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="utilisateur-document.html">Documents</a>
+                                    <a class="nav-link" href="{{ route('admin.document') }}">Documents</a>
                                 </li>
 
                             </ul>
@@ -101,16 +103,20 @@
                             </button>
                             <ul class="dropdown-menu dashboard__navbar-dropdown">
                                 <li class="user">
-                                    Monsieur <span class="user__name">LeNom</span>
+                                    Bonjour <span class="user__name">Admin</span>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">
+                                <li>
+                                    <a href="{{ route('admin.logout') }}" class="dropdown-item"
+                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                         <i class="ti-shift-right"></i>
-                                        Se déconnecter
-                                    </a></li>
-                                <li><a class="dropdown-item" href="change-password.html">
+                                        Se Deconnecté</a>
+                                    <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf
+                                    </form>
+                                </li>
+                                <li><a class="dropdown-item" href="">
                                         <i class="ti-key"></i>
                                         Changer le mot de pass
                                     </a></li>
@@ -159,7 +165,8 @@
                                                         <i class="ti-pencil"></i>
                                                     </a>
                                                     <a class="btn dashboard__tdb-btn" href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#confirmModal{{ $a->id }}">
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#confirmModal{{ $a->id }}">
                                                         <i class="ti-trash"></i>
                                                     </a>
                                                 </div>
@@ -199,7 +206,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="pt-3">Service</td>
+                                        <td class="pt-3">Description</td>
                                         <td>
                                             <textarea class="form-control custom-input" name="centenu"></textarea>
                                         </td>
@@ -266,9 +273,9 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="input-group fit-content">
-                                                        <input  type="file" id="photosUpload"
-                                                            name="imageU" required>
-                                                        
+                                                        <input type="file" id="photosUpload" name="imageU"
+                                                            required>
+
                                                     </div>
                                                     <span class="text-small" style="color:red">Taille max des photos
                                                         est 3MB</span>
@@ -286,35 +293,38 @@
 
 
             {{-- Delete Annonce --}}
-            @foreach($annonce as $d)
-            <div class="modal fade" id="confirmModal{{$d->id}}" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="min-width: 45rem;">
-                    <form method="post" action="{{route('admin.deleteannonce',$d->id)}}" class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="min-width: 45rem;">
-                        @csrf
-                        @method('DELETE')
-                        <div class="modal-content rounded-0 bg-main border-0">
-                            <div class="modal-header border-0">
-                                <h1 class="modal-title fs-5 text-primary text-center w-100" id="confirmModalLabel">
-                                    Confirmer votre action</h1>
+            @foreach ($annonce as $d)
+                <div class="modal fade" id="confirmModal{{ $d->id }}" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="min-width: 45rem;">
+                        <form method="post" action="{{ route('admin.deleteannonce', $d->id) }}"
+                            class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                            style="min-width: 45rem;">
+                            @csrf
+                            @method('DELETE')
+                            <div class="modal-content rounded-0 bg-main border-0">
+                                <div class="modal-header border-0">
+                                    <h1 class="modal-title fs-5 text-primary text-center w-100"
+                                        id="confirmModalLabel">
+                                        Confirmer votre action</h1>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-center">
+                                        <span id="confirmModalMessage">Vous êtes sure ?</span>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default dashboard__tdb-btn-default"
+                                        data-bs-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-primary rounded-0">Confirmer</button>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                <p class="text-center">
-                                    <span id="confirmModalMessage">Vous êtes sure ?</span>
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default dashboard__tdb-btn-default"
-                                    data-bs-dismiss="modal">Annuler</button>
-                                <button type="submit" class="btn btn-primary rounded-0">Confirmer</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
             @endforeach
 
-            
+
             </div>
         </main>
     </section>

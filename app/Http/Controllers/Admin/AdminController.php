@@ -223,7 +223,7 @@ class AdminController extends Controller
 
     public function deletecompte($id)
     {
-        $delete = User::where('id', $id);
+        $delete = User::find($id);
         unlink(public_path('./cin1/') . $delete->cinDocument1);
         unlink(public_path('./cin2/') . $delete->cinDocument2);
         unlink(public_path('./profile/') . $delete->profileDocument);

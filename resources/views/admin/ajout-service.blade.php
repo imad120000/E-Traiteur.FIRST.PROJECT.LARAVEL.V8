@@ -18,7 +18,8 @@
     <aside class="dashboard__sidebar">
       <header class="border-bottom px-3 d-flex align-items-center justify-content-between">
         <span class="dashboard__logo">
-          etraiteur 
+          <img src="../assets/images/Logo wight.png" width="150">
+ 
         </span>
         <i class="ti-align-right h4 mb-0"></i>
       </header>

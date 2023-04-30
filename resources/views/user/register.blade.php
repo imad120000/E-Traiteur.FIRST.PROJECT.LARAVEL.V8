@@ -148,7 +148,7 @@
                                         @enderror
                                     </span>
                                     <label class="login__card-label" for="cin">
-                                        CIN 1
+                                        CIN Recto :
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="input-group fit-content border-0">
@@ -268,7 +268,7 @@
                                         @enderror
                                     </span>
                                     <label class="login__card-label" for="profil-image">
-                                        CIN 2
+                                        CIN Verso : 
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="input-group fit-content border-0">

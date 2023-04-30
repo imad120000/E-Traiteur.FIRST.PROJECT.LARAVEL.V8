@@ -207,8 +207,8 @@
                             <?php
                           }
                           ?>
-                            <iframe class="carousel-item" width="560" height="300px"
-                                src="https://www.youtube.com/embed/6bTbN5JBssg" frameborder="0"></iframe>
+                           {{--  <iframe class="carousel-item" width="560" height="300px"
+                                src="https://www.youtube.com/embed/6bTbN5JBssg" frameborder="0"></iframe> --}}
                         </div>
                         <button class="carousel-control-prev carousel-btn" type="button"
                             data-bs-target="#imagesShowcaseCarousel" data-bs-slide="prev">
