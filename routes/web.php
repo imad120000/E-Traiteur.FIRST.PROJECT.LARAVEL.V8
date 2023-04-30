@@ -7,18 +7,6 @@ use App\Http\Controllers\User\UserController;
 
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
 
 Route::get('/', [AdminController::class, 'home'])->name('home');
 Route::get('/recherche', [AdminController::class, 'searche'])->name('searche');
@@ -26,14 +14,7 @@ Route::post('/recherche', [AdminController::class, 'search'])->name('search');
 Route::get('/details/{id}', [UserController::class, 'annonce'])->name('details');
 
 
-
-
-
-
-
-
-
-//envoyé message
+//Envoyé message
 Route::post('/', [AdminController::class, 'envoye'])->name('envoye');
 
 //User
