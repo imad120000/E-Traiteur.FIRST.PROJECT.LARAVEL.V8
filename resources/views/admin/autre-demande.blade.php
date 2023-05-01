@@ -23,103 +23,122 @@
 
 <body>
     <section class="dashboard">
-        <aside class="dashboard__sidebar">
-            <header class="border-bottom px-3 d-flex align-items-center justify-content-between">
-              <span class="dashboard__logo">
+      <aside class="dashboard__sidebar">
+        <header class="border-bottom px-3 d-flex align-items-center justify-content-between">
+            <span class="dashboard__logo">
                 <img src="../assets/images/Logo wight.png" width="150">
-              </span>
-              <i class="ti-align-right h4 mb-0"></i>
-            </header>
-            <section class="dashboard__sidebar-nav">
-              <ul class="nav flex-column">
+            </span>
+            <i class="ti-align-right h4 mb-0"></i>
+        </header>
+        <section class="dashboard__sidebar-nav">
+            <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="ps-3 nav-link" aria-current="page" href="{{route('admin.profile')}}">
-                    <i class="icon ti-layout"></i>
-                    Tableau de bord
-                  </a>
+                    <a class="ps-3 nav-link" aria-current="page" href="{{ route('admin.profile') }}">
+                        <i class="icon ti-layout"></i>
+                        Tableau de bord
+                    </a>
                 </li>
                 <li class="nav-item">
-                  <a class="ps-3 nav-link" aria-current="page" href="{{route('admin.annonce')}}">
-                    <i class="icon ti-announcement"></i>
-                    Anonces
-                  </a>
+                    <a class="ps-3 nav-link" aria-current="page" href="{{ route('admin.annonce') }}">
+                        <i class="icon ti-announcement"></i>
+                        Anonces
+                    </a>
                 </li>
                 <li class="nav-item">
-                  <a class="ps-3 nav-link" href="#demandes" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="demandes">
-                    <i class="icon ti-email"></i>
-                    Demandes
-                    <i class="ti-angle-down ms-auto"></i>
-                  </a>
-                  <div class="collapse dashboard__sidebar-collapse show" id="demandes">
-                    <ul class="nav flex-column ps-3">
-                        <li class="nav-item">
-                            <a class="nav-link " href="{{route('admin.activecompte')}}">Activation de compte</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin.classment')}}">Classment </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin.message')}}">Message </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{route('admin.autredemande')}}">Autre demandes</a>
-                        </li>
-                    </ul>
-                </div>
+                    <a class="ps-3 nav-link " aria-current="page" href="{{ route('admin.addservice') }}">
+                        <i class="icon ti-announcement"></i>
+                        Service
+                    </a>
                 </li>
                 <li class="nav-item">
-                  <a class="ps-3 nav-link" href="#utilisateurs" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="utilisateurs">
-                    <i class="icon ti-user"></i>
-                    Utilisateurs
-                    <i class="ti-angle-down ms-auto"></i>
-                  </a>
-                  <div class="collapse dashboard__sidebar-collapse" id="utilisateurs">
-                    <ul class="nav flex-column ps-3">
-                      <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin.document')}}">Documents</a>
-                      </li>
-                      
-                    </ul>
-                  </div>
+                    <a class="ps-3 nav-link " aria-current="page" href="{{ route('admin.ville') }}">
+                        <i class="icon ti-announcement"></i>
+                        Villes
+                    </a>
                 </li>
                 <li class="nav-item">
-                  <a class="ps-3 nav-link" href="statistiques">
-                    <i class="icon ti-bar-chart"></i>
-                    Statistiques
-                  </a>
+                    <a class="ps-3 nav-link" href="#demandes" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="demandes">
+                        <i class="icon ti-email"></i>
+                        Demandes
+                        <i class="ti-angle-down ms-auto"></i>
+                    </a>
+                    <div class="collapse dashboard__sidebar-collapse show" id="demandes">
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link " href="{{ route('admin.activecompte') }}">Activation de
+                                    compte</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.classment') }}">Classment </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.message') }}">Message </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{{ route('admin.autredemande') }}">Autre demandes</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
-              </ul>
-            </section>
-          </aside>
-          <main class="dashboard__main">
-            <nav class="dashboard__navbar">
-              <div class="container-fluid">
+                <li class="nav-item">
+                    <a class="ps-3 nav-link" href="#utilisateurs" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="utilisateurs">
+                        <i class="icon ti-user"></i>
+                        Utilisateurs
+                        <i class="ti-angle-down ms-auto"></i>
+                    </a>
+                    <div class="collapse dashboard__sidebar-collapse" id="utilisateurs">
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.document') }}">Documents</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="ps-3 nav-link" href="statistiques">
+                        <i class="icon ti-bar-chart"></i>
+                        Statistiques
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+    <main class="dashboard__main">
+        <nav class="dashboard__navbar">
+            <div class="container-fluid">
                 <ul class="navbar-nav">
-                  <li class="nav-item dropdown ms-auto">
-                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img class="avatar" src="../assets/images/user.png" alt="">
-                    </button>
-                    <ul class="dropdown-menu dashboard__navbar-dropdown">
-                      <li class="user">
-                        Bonjour <span class="user__name">Admin</span>
-                      </li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li>
-                        <a href="{{ route('admin.logout') }}" class="dropdown-item"
-                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                          <i class="ti-shift-right"></i>
-                          Se Deconnecté</a>
-                       <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf</form> 
-                      </li>
-                      <li><a class="dropdown-item" href="">
-                        <i class="ti-key"></i>
-                        Changer le mot de pass
-                      </a></li>
-                    </ul>
-                  </li>
+                    <li class="nav-item dropdown ms-auto">
+                        <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <img class="avatar" src="../assets/images/user.png" alt="">
+                        </button>
+                        <ul class="dropdown-menu dashboard__navbar-dropdown">
+                            <li class="user">
+                                Bonjour <span class="user__name">Admin</span>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.logout') }}" class="dropdown-item"
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    <i class="ti-shift-right"></i>
+                                    Se Deconnecté</a>
+                                <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf
+                                </form>
+                            </li>
+                            <li><a class="dropdown-item" href="">
+                                    <i class="ti-key"></i>
+                                    Changer le mot de pass
+                                </a></li>
+                        </ul>
+                    </li>
                 </ul>
-              </div>
-            </nav>
+            </div>
+        </nav>
             <!-- main content -->
             <div class="main__content">
                 <div class="container">
@@ -158,11 +177,11 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                                @endforeach 
+                                @endforeach
                             </table>
                         </article>
                         {{-- Delete Message --}}
-                           @foreach ($autre as $t)
+                        @foreach ($autre as $t)
                             <form method="post" action="{{ route('admin.deletedemande', $t->id) }}">
                                 @csrf
                                 @method('DELETE')
@@ -197,10 +216,10 @@
                                     </div>
                                 </div>
                             </form>
-                        @endforeach 
+                        @endforeach
 
                         {{--  show message --}}
-                         @foreach ($autre as $d)
+                        @foreach ($autre as $d)
                             <div class="modal fade" id="modal-show-message-4{{ $d->id }}" tabindex="-1"
                                 data-bs-backdrop="static" aria-labelledby="showModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
@@ -218,9 +237,9 @@
                                                     <td>{{ $d->user->name }} {{ $d->user->prenom }}</td>
                                                 </tr>
                                                 <tr>
-                                                  <th>Objet</th>
-                                                  <td>{{ $d->objet }}</td>
-                                              </tr>
+                                                    <th>Objet</th>
+                                                    <td>{{ $d->objet }}</td>
+                                                </tr>
                                                 <tr>
                                                     <th>Message</th>
                                                     <td>{{ $d->Message }}</td>
@@ -237,7 +256,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach 
+                        @endforeach
                     </section>
                 </div>
             </div>

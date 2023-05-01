@@ -19,7 +19,6 @@
             <header class="border-bottom px-3 d-flex align-items-center justify-content-between">
                 <span class="dashboard__logo">
                     <img src="../assets/images/Logo wight.png" width="150">
-
                 </span>
                 <i class="ti-align-right h4 mb-0"></i>
             </header>
@@ -35,6 +34,18 @@
                         <a class="ps-3 nav-link active" aria-current="page" href="{{ route('admin.annonce') }}">
                             <i class="icon ti-announcement"></i>
                             Anonces
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="ps-3 nav-link " aria-current="page" href="{{ route('admin.addservice') }}">
+                            <i class="icon ti-announcement"></i>
+                            Service
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="ps-3 nav-link " aria-current="page" href="{{ route('admin.ville') }}">
+                            <i class="icon ti-announcement"></i>
+                            Villes
                         </a>
                     </li>
                     <li class="nav-item">
@@ -79,7 +90,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="ps-3 nav-link" href="statistiques.html">
+                        <a class="ps-3 nav-link" href="statistiques">
                             <i class="icon ti-bar-chart"></i>
                             Statistiques
                         </a>
@@ -88,13 +99,8 @@
             </section>
         </aside>
         <main class="dashboard__main">
-            <nav class="navbar p-0 dashboard__navbar">
+            <nav class="dashboard__navbar">
                 <div class="container-fluid">
-                    <button class="btn btn-primary rounded-0 d-flex align-items-center" role="button"
-                        data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="ti-plus me-2"></i>
-                        Ajouter une annonce
-                    </button>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown ms-auto">
                             <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown"

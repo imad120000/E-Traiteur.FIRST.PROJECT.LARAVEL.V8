@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -16,41 +15,36 @@
 </head>
 
 <body>
-
-
-
-
     <section class="dashboard">
         <aside class="dashboard__sidebar">
             <header class="border-bottom px-3 d-flex align-items-center justify-content-between">
-                <br>
-                <a href="/admin" class="navbar-brand fs-3"><img src="../assets/images/Logo wight.png" width="150">
-                </a>
-                <br><br><br>
+                <span class="dashboard__logo">
+                    <img src="../assets/images/Logo wight.png" width="150">
+                </span>
                 <i class="ti-align-right h4 mb-0"></i>
             </header>
             <section class="dashboard__sidebar-nav">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="ps-3 nav-link" aria-current="page" href="/admin">
+                        <a class="ps-3 nav-link" aria-current="page" href="{{ route('admin.profile') }}">
                             <i class="icon ti-layout"></i>
                             Tableau de bord
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="ps-3 nav-link" aria-current="page" href="/admin/annonces">
+                        <a class="ps-3 nav-link" aria-current="page" href="{{ route('admin.annonce') }}">
                             <i class="icon ti-announcement"></i>
-                            Annonces
+                            Anonces
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="ps-3 nav-link" aria-current="page" href="/admin/services">
+                        <a class="ps-3 nav-link " aria-current="page" href="{{ route('admin.addservice') }}">
                             <i class="icon ti-announcement"></i>
-                            Services
+                            Service
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="ps-3 nav-link active" aria-current="page" href="/admin/services">
+                        <a class="ps-3 nav-link active" aria-current="page" href="{{ route('admin.ville') }}">
                             <i class="icon ti-announcement"></i>
                             Villes
                         </a>
@@ -62,19 +56,20 @@
                             Demandes
                             <i class="ti-angle-down ms-auto"></i>
                         </a>
-                        <div class="collapse dashboard__sidebar-collapse" id="demandes">
+                        <div class="collapse dashboard__sidebar-collapse " id="demandes">
                             <ul class="nav flex-column ps-3">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/admin/users/non-active">Utilisateurs non activés</a>
+                                    <a class="nav-link " href="{{ route('admin.activecompte') }}">Activation de
+                                        compte</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/admin/demandes">Demandes de Ranking</a>
+                                    <a class="nav-link" href="{{ route('admin.classment') }}">Classment </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/admin/emessages">Messages</a>
+                                    <a class="nav-link" href="{{ route('admin.message') }}">Message </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/admin/messages">Autre demandes</a>
+                                    <a class="nav-link" href="{{ route('admin.autredemande') }}">Autre demandes</a>
                                 </li>
                             </ul>
                         </div>
@@ -89,13 +84,14 @@
                         <div class="collapse dashboard__sidebar-collapse" id="utilisateurs">
                             <ul class="nav flex-column ps-3">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/admin/users">Tous les utilisateurs</a>
+                                    <a class="nav-link" href="{{ route('admin.document') }}">Documents</a>
                                 </li>
+
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="ps-3 nav-link" href="/statistiques">
+                        <a class="ps-3 nav-link" href="statistiques">
                             <i class="icon ti-bar-chart"></i>
                             Statistiques
                         </a>
@@ -103,42 +99,34 @@
                 </ul>
             </section>
         </aside>
-
         <main class="dashboard__main">
-            <nav class="navbar p-0 dashboard__navbar">
+            <nav class="dashboard__navbar">
                 <div class="container-fluid">
-                    <button class="btn btn-primary rounded-0 d-flex align-items-center" role="button"
-                        data-bs-toggle="modal" data-bs-target="#add-service">
-                        <i class="ti-plus me-2"></i>
-                        Ajouté une Villes
-                    </button>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown ms-auto">
                             <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <img class="avatar" src="/assets/images/user.png" alt="">
-
+                                <img class="avatar" src="../assets/images/user.png" alt="">
                             </button>
                             <ul class="dropdown-menu dashboard__navbar-dropdown">
                                 <li class="user">
-                                    Monsieur
-                                    <span class="user__name">Admin E-Traiteur</span>
+                                    Bonjour <span class="user__name">Admin</span>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/admin/change-password">
-                                        <i class="ti-key"></i>
-                                        Changer le mot de passe
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="/admin/logout">
+                                    <a href="{{ route('admin.logout') }}" class="dropdown-item"
+                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                         <i class="ti-shift-right"></i>
-                                        Se déconnecter
-                                    </a>
+                                        Se Deconnecté</a>
+                                    <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf
+                                    </form>
                                 </li>
+                                <li><a class="dropdown-item" href="">
+                                        <i class="ti-key"></i>
+                                        Changer le mot de pass
+                                    </a></li>
                             </ul>
                         </li>
                     </ul>
@@ -164,18 +152,19 @@
                                         <td>Action</td>
                                     </tr>
                                 </thead>
-                                     <tbody>
+                                @foreach ($ville as $v)
+                                    <tbody>
                                         <tr id="service-1">
                                             <td class="text-center pt-4">
-                                                Oujda
-                                                
+                                                {{ $v->name }}
                                             </td>
-                                            <td class="text-center pt-4"> 2023-05-01 08:16:01</td>
+                                            <td class="text-center pt-4"> {{ $v->created_at }}</td>
                                             <td class="pt-3">
                                                 <div class="d-flex justify-content-center">
                                                     <button type="submit"
                                                         class="delete-service-btn btn dashboard__tdb-btn"
-                                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#confirmDeleteModal{{ $v->id }}"
                                                         data-id="1">
                                                         <i class="ti-trash"></i>
                                                     </button>
@@ -183,97 +172,94 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                                                                    <tbody>
-                                        <tr id="service-1">
-                                            <td class="text-center pt-4">
-                                                Taza
-                                                
-                                            </td>
-                                            <td class="text-center pt-4"> 2023-05-01 08:17:37</td>
-                                            <td class="pt-3">
-                                                <div class="d-flex justify-content-center">
-                                                    <button type="submit"
-                                                        class="delete-service-btn btn dashboard__tdb-btn"
-                                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                                        data-id="1">
-                                                        <i class="ti-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                                            </table>
+                                @endforeach
+                            </table>
+                            <div class="d-flex justify-content-center">
+                                {{ $ville->links() }}
+                            </div>
                         </article>
-                        <div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static"
-                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                                style="min-width: 45rem;">
-                                <div class="modal-content rounded-0 bg-main border-0">
-                                    <div class="modal-header border-0">
-                                        <h1 class="modal-title fs-5 text-primary text-center w-100"
-                                            id="confirmModalLabel">
-                                            Confirmer votre action
-                                        </h1>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="text-center">
-                                            <span id="confirmModalMessage">Vous êtes sure ?</span>
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="reset" class="btn btn-default dashboard__tdb-btn-default"
-                                            data-bs-dismiss="modal">
-                                            Annuler
-                                        </button>
-                                        <form id="delete-service-form">
-                                            <button data-bs-dismiss="modal" type="submit"
-                                                class="btn btn-primary rounded-0">
-                                                Confirmer
-                                            </button>
-                                        </form>
+                        @foreach ($ville as $e)
+                            <form method="post" action="{{ route('admin.deleteville', $e->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <div class="modal fade" id="confirmDeleteModal{{ $e->id }}"
+                                    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                        style="min-width: 45rem;">
+                                        <div class="modal-content rounded-0 bg-main border-0">
+                                            <div class="modal-header border-0">
+                                                <h1 class="modal-title fs-5 text-primary text-center w-100"
+                                                    id="confirmModalLabel">
+                                                    Confirmer votre action , Lorsque vous supprimez une villes,
+                                                    vous supprimez également le client qui a choisi ce ville,
+                                                    ainsi que la suppression des publications liées à ce ville ....... ?
+                                                    ?
+                                                </h1>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="text-center">
+                                                    <span id="confirmModalMessage">Vous êtes sure ?</span>
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="reset"
+                                                    class="btn btn-default dashboard__tdb-btn-default"
+                                                    data-bs-dismiss="modal">
+                                                    Annuler
+                                                </button>
+                                                <form id="delete-service-form">
+                                                    <button data-bs-dismiss="modal" type="submit"
+                                                        class="btn btn-primary rounded-0">
+                                                        Confirmer
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </form>
+                        @endforeach
                     </section>
                 </div>
             </div>
 
-            <div class="modal fade" id="add-service" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="open modal to add service" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="min-width: 45rem;">
-                    <div class="modal-content rounded-0 bg-main border-0">
-                        <form method="POST" action="http://127.0.0.1:8000/admin/ajout-service" id="add-service-form">
-                          <input type="hidden" name="_token" value="fGpBfQuMxufmrWkPA4WY95Q22kLDA7jKhXvlLg86">                            <div class="modal-header border-0">
-                                <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">
-                                    Ajouter un ville
-                                </h1>
-                                <div class="btn-group" role="group">
-                                    <button type="reset" class="btn btn-default dashboard__tdb-btn-default"
-                                        data-bs-dismiss="modal">
-                                        Annuler
-                                    </button>
-                                    <button type="submit" class="btn btn-primary rounded-0">
-                                        Ajouter
-                                    </button>
+                <div class="modal fade" id="add-service" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="open modal to add service" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="min-width: 45rem;">
+                        <div class="modal-content rounded-0 bg-main border-0">
+                            <form method="POST" action="{{route('admin.addville')}}" >
+                                @csrf
+                                <div class="modal-header border-0">
+                                    <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">
+                                        Ajouter un ville
+                                    </h1>
+                                    <div class="btn-group" role="group">
+                                        <button type="reset" class="btn btn-default dashboard__tdb-btn-default"
+                                            data-bs-dismiss="modal">
+                                            Annuler
+                                        </button>
+                                        <button type="submit" class="btn btn-primary rounded-0">
+                                            Ajouter
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="modal-body p-0">
-                                <table class="table table-bordered border-main m-0">
-                                    <tr>
-                                        <td class="pt-3">Service</td>
-                                        <td>
-                                            <input name="service" type="text"  class="form-control" />
-                                        </td>
-                                    </tr>
-                                    
-                                </table>
-                            </div>
-                        </form>
+                                <div class="modal-body p-0">
+                                    <table class="table table-bordered border-main m-0">
+                                        <tr>
+                                            <td class="pt-3">Villes</td>
+                                            <td>
+                                                <input name="ville" type="text" class="form-control" />
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            
         </main>
     </section>
     <script src="../assets/js/alerts.js"></script>

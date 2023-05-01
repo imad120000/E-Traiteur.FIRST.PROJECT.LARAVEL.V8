@@ -337,7 +337,7 @@ class AdminController extends Controller
     //Page Message
     public function message()
     {
-        $message = message::all();
+        $message =  DB::table('messages')->paginate(5);
         return view('admin.Message', ['message' => $message]);
     }
 
@@ -509,14 +509,39 @@ class AdminController extends Controller
     public function deleteservice($id)
     {
 
-        $delete = service::find($id);
-        $delete->delete();
-        $deleteA = Annonce::where('service_id', $id);
-        $deleteA->delete();
-        $deleteC = classment::where('service_id', $id);
-        $deleteC->delete();
+        $delete = service::find($id);  
+        $deleteA = Annonce::where('service_id', $id); 
+        $deleteC = classment::where('service_id', $id); 
         $deleteU = User::where('service_id', $id);
+       
+        if ($deleteU->exists()) {
+            foreach ($deleteU->get() as $user) {
+                unlink(public_path('./cin1/') . $user->cinDocument1);
+                unlink(public_path('./cin2/') . $user->cinDocument2);
+                unlink(public_path('./profile/') . $user->profileDocument);
+                unlink(public_path('./status/') . $user->statusDocument);
+            }
+        }
+        
+        if ($deleteA->exists()) {
+            foreach ($deleteA->get() as $annonce) {
+                if ($annonce->photo) {
+                    $photos = json_decode($annonce->photo, true);
+                    foreach ($photos as $photo) {
+                        $filePath = public_path('postimage').'/'.$photo;
+                        if (file_exists($filePath)) {
+                            unlink($filePath);
+                        }
+                    }
+                }
+                $annonce->delete();
+            }
+        }
         $deleteU->delete();
+        $deleteA->delete();
+        $delete->delete();
+        $deleteC->delete();
+
         return redirect()->back();
     }
 
@@ -525,7 +550,57 @@ class AdminController extends Controller
     //Page villes
     public function ville()
     {
-        $ville = ville::all();
+        $ville = DB::table('villes')->paginate(4);
         return view('admin.ville', ['ville' => $ville]);
     }
+    public function addville(Request $request)
+    {
+        $request->validate([
+            'ville' => 'required',
+        ]);
+        $ville = new ville();
+        $ville->name = $request['ville'];
+        $ville->save();
+        return redirect()->back();
+    }
+
+
+
+    public function deleteville($id)
+    {
+        $delete = ville::find($id);
+        $deleteA = Annonce::where('ville_id', $id);
+        $deleteU = User::where('ville_id', $id);
+        
+        if ($deleteU->exists()) {
+            foreach ($deleteU->get() as $user) {
+                unlink(public_path('./cin1/') . $user->cinDocument1);
+                unlink(public_path('./cin2/') . $user->cinDocument2);
+                unlink(public_path('./profile/') . $user->profileDocument);
+                unlink(public_path('./status/') . $user->statusDocument);
+            }
+        }
+        
+        if ($deleteA->exists()) {
+            foreach ($deleteA->get() as $annonce) {
+                if ($annonce->photo) {
+                    $photos = json_decode($annonce->photo, true);
+                    foreach ($photos as $photo) {
+                        $filePath = public_path('postimage').'/'.$photo;
+                        if (file_exists($filePath)) {
+                            unlink($filePath);
+                        }
+                    }
+                }
+                $annonce->delete();
+            }
+        }
+        
+        $deleteU->delete();
+        $deleteA->delete();
+        $delete->delete();
+        
+        return redirect()->back();
+    }
+
 }

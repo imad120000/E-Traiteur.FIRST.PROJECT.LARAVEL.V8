@@ -37,13 +37,25 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="ps-3 nav-link " aria-current="page" href="{{ route('admin.addservice') }}">
+                            <i class="icon ti-announcement"></i>
+                            Service
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="ps-3 nav-link " aria-current="page" href="{{ route('admin.ville') }}">
+                            <i class="icon ti-announcement"></i>
+                            Villes
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="ps-3 nav-link" href="#demandes" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="demandes">
                             <i class="icon ti-email"></i>
                             Demandes
                             <i class="ti-angle-down ms-auto"></i>
                         </a>
-                        <div class="collapse dashboard__sidebar-collapse " id="demandes">
+                        <div class="collapse dashboard__sidebar-collapse" id="demandes">
                             <ul class="nav flex-column ps-3">
                                 <li class="nav-item">
                                     <a class="nav-link " href="{{ route('admin.activecompte') }}">Activation de

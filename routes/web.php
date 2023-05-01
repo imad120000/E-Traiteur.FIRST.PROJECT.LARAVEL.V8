@@ -122,6 +122,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         //Page villes
         Route::get('/ville', [AdminController::class, 'ville'])->name('ville');
+        Route::post('/ville', [AdminController::class, 'addville'])->name('addville');
+        Route::delete('/ville/{id}', [AdminController::class, 'deleteville'])->name('deleteville');
 
 
 
