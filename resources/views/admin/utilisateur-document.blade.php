@@ -17,100 +17,107 @@
     <section class="dashboard">
         <aside class="dashboard__sidebar">
             <header class="border-bottom px-3 d-flex align-items-center justify-content-between">
-              <span class="dashboard__logo">
-                <img src="../assets/images/Logo wight.png" width="150">
-              </span>
-              <i class="ti-align-right h4 mb-0"></i>
+                <span class="dashboard__logo">
+                    <img src="../assets/images/Logo wight.png" width="150">
+                </span>
+                <i class="ti-align-right h4 mb-0"></i>
             </header>
             <section class="dashboard__sidebar-nav">
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="ps-3 nav-link" aria-current="page" href="{{route('admin.profile')}}">
-                    <i class="icon ti-layout"></i>
-                    Tableau de bord
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="ps-3 nav-link" aria-current="page" href="{{route('admin.annonce')}}">
-                    <i class="icon ti-announcement"></i>
-                    Anonces
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="ps-3 nav-link" href="#demandes" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="demandes">
-                    <i class="icon ti-email"></i>
-                    Demandes
-                    <i class="ti-angle-down ms-auto"></i>
-                  </a>
-                  <div class="collapse dashboard__sidebar-collapse " id="demandes">
-                    <ul class="nav flex-column ps-3">
-                        <li class="nav-item">
-                            <a class="nav-link " href="{{route('admin.activecompte')}}">Activation de compte</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin.classment')}}">Classment </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin.message')}}">Message </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin.autredemande')}}">Autre demandes</a>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="ps-3 nav-link" aria-current="page" href="{{ route('admin.profile') }}">
+                            <i class="icon ti-layout"></i>
+                            Tableau de bord
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="ps-3 nav-link" aria-current="page" href="{{ route('admin.annonce') }}">
+                            <i class="icon ti-announcement"></i>
+                            Anonces
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="ps-3 nav-link" href="#demandes" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="demandes">
+                            <i class="icon ti-email"></i>
+                            Demandes
+                            <i class="ti-angle-down ms-auto"></i>
+                        </a>
+                        <div class="collapse dashboard__sidebar-collapse " id="demandes">
+                            <ul class="nav flex-column ps-3">
+                                <li class="nav-item">
+                                    <a class="nav-link " href="{{ route('admin.activecompte') }}">Activation de
+                                        compte</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.classment') }}">Classment </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.message') }}">Message </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.autredemande') }}">Autre demandes</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="ps-3 nav-link" href="#utilisateurs" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="utilisateurs">
+                            <i class="icon ti-user"></i>
+                            Utilisateurs
+                            <i class="ti-angle-down ms-auto"></i>
+                        </a>
+                        <div class="collapse dashboard__sidebar-collapse show" id="utilisateurs">
+                            <ul class="nav flex-column ps-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{{ route('admin.document') }}">Documents</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="ps-3 nav-link" href="statistiques">
+                            <i class="icon ti-bar-chart"></i>
+                            Statistiques
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </aside>
+        <main class="dashboard__main">
+            <nav class="dashboard__navbar">
+                <div class="container-fluid">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown ms-auto">
+                            <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img class="avatar" src="../assets/images/user.png" alt="">
+                            </button>
+                            <ul class="dropdown-menu dashboard__navbar-dropdown">
+                                <li class="user">
+                                    Bonjour <span class="user__name">Admin</span>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.logout') }}" class="dropdown-item"
+                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                        <i class="ti-shift-right"></i>
+                                        Se Deconnecté</a>
+                                    <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf
+                                    </form>
+                                </li>
+                                <li><a class="dropdown-item" href="">
+                                        <i class="ti-key"></i>
+                                        Changer le mot de pass
+                                    </a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
-                </li>
-                <li class="nav-item">
-                  <a class="ps-3 nav-link" href="#utilisateurs" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="utilisateurs">
-                    <i class="icon ti-user"></i>
-                    Utilisateurs
-                    <i class="ti-angle-down ms-auto"></i>
-                  </a>
-                  <div class="collapse dashboard__sidebar-collapse show" id="utilisateurs">
-                    <ul class="nav flex-column ps-3">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="{{route('admin.document')}}">Documents</a>
-                      </li>
-                      
-                    </ul>
-                  </div>
-                </li>
-                <li class="nav-item">
-                  <a class="ps-3 nav-link" href="statistiques">
-                    <i class="icon ti-bar-chart"></i>
-                    Statistiques
-                  </a>
-                </li>
-              </ul>
-            </section>
-          </aside>
-          <main class="dashboard__main">
-            <nav class="dashboard__navbar">
-              <div class="container-fluid">
-                <ul class="navbar-nav">
-                  <li class="nav-item dropdown ms-auto">
-                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img class="avatar" src="../assets/images/user.png" alt="">
-                    </button>
-                    <ul class="dropdown-menu dashboard__navbar-dropdown">
-                      <li class="user">
-                        Bonjour <span class="user__name">Admin</span>
-                      </li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li>
-                        <a href="{{ route('admin.logout') }}" class="dropdown-item"
-                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                          <i class="ti-shift-right"></i>
-                          Se Deconnecté</a>
-                       <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf</form> 
-                      </li>
-                      <li><a class="dropdown-item" href="">
-                        <i class="ti-key"></i>
-                        Changer le mot de pass
-                      </a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
             </nav>
             <!-- main content -->
             <div class="main__content">
@@ -186,6 +193,7 @@
                                             </tr>
                                         </tbody>
                                     @endforeach
+
                                 @endif
                                 @if (isset($result))
                                     @foreach ($result as $u)
@@ -225,8 +233,19 @@
                                             </tr>
                                         </tbody>
                                     @endforeach
+
                                 @endif
                             </table>
+                            @if (!isset($result))
+                                <div class="d-flex justify-content-center">
+                                    {{ $user->links() }}
+                                </div>
+                            @endif
+                            @if (isset($result))
+                                <div class="d-flex justify-content-center">
+                                    {{ $result->links() }}
+                                </div>
+                            @endif
 
                             {{-- Show info user --}}
                             {{-- if Not  result set for recherche i mean that i don't click button recherch than desplay this result : --}}

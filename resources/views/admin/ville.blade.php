@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -43,9 +44,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="ps-3 nav-link active" aria-current="page" href="/admin/services">
+                        <a class="ps-3 nav-link" aria-current="page" href="/admin/services">
                             <i class="icon ti-announcement"></i>
                             Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="ps-3 nav-link active" aria-current="page" href="/admin/services">
+                            <i class="icon ti-announcement"></i>
+                            Villes
                         </a>
                     </li>
                     <li class="nav-item">
@@ -103,7 +110,7 @@
                     <button class="btn btn-primary rounded-0 d-flex align-items-center" role="button"
                         data-bs-toggle="modal" data-bs-target="#add-service">
                         <i class="ti-plus me-2"></i>
-                        Ajouter un service
+                        Ajouté une Villes
                     </button>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown ms-auto">
@@ -140,7 +147,7 @@
             <!-- main content -->
             <div class="main__content">
                 <div class="container">
-                    <h1 class="text-center dashboard__title">Ajout de service</h1>
+                    <h1 class="text-center dashboard__title">Ajout de ville</h1>
 
                     <section class="dashboard__table-de-bord">
                         <article class="dashboard__table-de-bord-body">
@@ -152,25 +159,23 @@
                             <table class="table table-bordered dashboard__tdb-table">
                                 <thead>
                                     <tr class="text-center">
-                                        <td>Service</td>
+                                        <td>villes</td>
                                         <td>Date de Creation</td>
                                         <td>Action</td>
                                     </tr>
                                 </thead>
-                                @foreach ($service as $s)
-                                    <tbody>
+                                     <tbody>
                                         <tr id="service-1">
                                             <td class="text-center pt-4">
-                                                {{ $s->name }}
-
+                                                Oujda
+                                                
                                             </td>
-                                            <td class="text-center pt-4"> {{ $s->created_at }}</td>
+                                            <td class="text-center pt-4"> 2023-05-01 08:16:01</td>
                                             <td class="pt-3">
                                                 <div class="d-flex justify-content-center">
                                                     <button type="submit"
                                                         class="delete-service-btn btn dashboard__tdb-btn"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#confirmDeleteModal{{ $s->id }}"
+                                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
                                                         data-id="1">
                                                         <i class="ti-trash"></i>
                                                     </button>
@@ -178,52 +183,59 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                                @endforeach
-                            </table>
-                            <div class="d-flex justify-content-center">
-                                {{$service->links() }}
-                            </div>
+                                                                    <tbody>
+                                        <tr id="service-1">
+                                            <td class="text-center pt-4">
+                                                Taza
+                                                
+                                            </td>
+                                            <td class="text-center pt-4"> 2023-05-01 08:17:37</td>
+                                            <td class="pt-3">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="submit"
+                                                        class="delete-service-btn btn dashboard__tdb-btn"
+                                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
+                                                        data-id="1">
+                                                        <i class="ti-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                                            </table>
                         </article>
-                        @foreach ($service as $d)
-                        <form method="post" action="{{route('admin.deleteservice',$d->id)}}">
-                          @csrf
-                          @method('DELETE')
-                            <div class="modal fade" id="confirmDeleteModal{{ $d->id }}"
-                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                                    style="min-width: 45rem;">
-                                    <div class="modal-content rounded-0 bg-main border-0">
-                                        <div class="modal-header border-0">
-                                            <h1 class="modal-title fs-5 text-primary text-center w-100"
-                                                id="confirmModalLabel">
-                                                Confirmer votre action
-                                            </h1>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p class="text-center">
-                                                <span id="confirmModalMessage" class="text-danger">
-                                                    Vous êtes sure , Lorsque vous supprimez un service, vous supprimez également le client qui a choisi ce service, ainsi que la suppression des publications liées à ce service ainsi que la commande qui lui est liée....... ?
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default dashboard__tdb-btn-default"
-                                                data-bs-dismiss="modal">
-                                                Annuler
+                        <div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static"
+                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                style="min-width: 45rem;">
+                                <div class="modal-content rounded-0 bg-main border-0">
+                                    <div class="modal-header border-0">
+                                        <h1 class="modal-title fs-5 text-primary text-center w-100"
+                                            id="confirmModalLabel">
+                                            Confirmer votre action
+                                        </h1>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-center">
+                                            <span id="confirmModalMessage">Vous êtes sure ?</span>
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="reset" class="btn btn-default dashboard__tdb-btn-default"
+                                            data-bs-dismiss="modal">
+                                            Annuler
+                                        </button>
+                                        <form id="delete-service-form">
+                                            <button data-bs-dismiss="modal" type="submit"
+                                                class="btn btn-primary rounded-0">
+                                                Confirmer
                                             </button>
-                                            <form id="delete-service-form">
-                                                <button data-bs-dismiss="modal" type="submit"
-                                                    class="btn btn-primary rounded-0">
-                                                    Confirmer
-                                                </button>
-                                            </form>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                        @endforeach
+                        </div>
                     </section>
                 </div>
             </div>
@@ -232,11 +244,10 @@
                 tabindex="-1" aria-labelledby="open modal to add service" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="min-width: 45rem;">
                     <div class="modal-content rounded-0 bg-main border-0">
-                        <form method="POST" action="{{ route('admin.addservices') }}" id="add-service-form">
-                            @csrf
-                            <div class="modal-header border-0">
+                        <form method="POST" action="http://127.0.0.1:8000/admin/ajout-service" id="add-service-form">
+                          <input type="hidden" name="_token" value="fGpBfQuMxufmrWkPA4WY95Q22kLDA7jKhXvlLg86">                            <div class="modal-header border-0">
                                 <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">
-                                    Ajouter un service
+                                    Ajouter un ville
                                 </h1>
                                 <div class="btn-group" role="group">
                                     <button type="reset" class="btn btn-default dashboard__tdb-btn-default"
@@ -253,10 +264,10 @@
                                     <tr>
                                         <td class="pt-3">Service</td>
                                         <td>
-                                            <input name="service" type="text" class="form-control" />
+                                            <input name="service" type="text"  class="form-control" />
                                         </td>
                                     </tr>
-
+                                    
                                 </table>
                             </div>
                         </form>

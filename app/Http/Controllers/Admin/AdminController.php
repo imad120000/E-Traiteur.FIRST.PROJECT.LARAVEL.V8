@@ -17,6 +17,7 @@ use App\Models\service;
 use App\Models\ville;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\ComparisonMethodDoesNotDeclareBoolReturnTypeException;
 
@@ -379,7 +380,7 @@ class AdminController extends Controller
     //Page Document
     public function document()
     {
-        $user = User::all();
+        $user = User::paginate(1);
         $ville = ville::all();
         $service = service::all();
         return view('admin.utilisateur-document', ['user' => $user, 'ville' => $ville, 'service' => $service]);
@@ -388,20 +389,32 @@ class AdminController extends Controller
     public function recherche(Request $request)
     {
 
-        $result = User::all();
+        $result = User::paginate(1);
         $ville = ville::all();
         $service = service::all();
 
         if (isset($request['ville']) && isset($request['service'])) {
+
             $result = User::where('ville_id', $request['ville'])
                 ->where('service_id', $request['service'])
-                ->get();
+                ->paginate(1);
+
         } else if (isset($request['ville'])) {
+
             $result = User::where('ville_id', $request['ville'])
-                ->get();
+                ->paginate(1);
+
         } else if (isset($request['service'])) {
+
             $result = User::where('service_id', $request['service'])
-                ->get();
+                ->paginate(1);
+
+        } else {
+
+            $result = User::with('service','ville')
+            ->paginate(1);
+
+            
         }
 
 
@@ -438,31 +451,28 @@ class AdminController extends Controller
         if (!empty($villeId) && !empty($serviceId)) {
 
             $result = Annonce::where('ville_id', $villeId)
-                        ->where('service_id', $serviceId)
-                        ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-                        ->inRandomOrder()
-                        ->get();
-
+                ->where('service_id', $serviceId)
+                ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                ->inRandomOrder()
+                ->get();
         } else if (!empty($villeId)) {
 
             $result = Annonce::where('ville_id', $villeId)
-                        ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-                        ->inRandomOrder()
-                        ->get();
-
+                ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                ->inRandomOrder()
+                ->get();
         } else if (!empty($serviceId)) {
 
             $result = Annonce::where('service_id', $serviceId)
-                        ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-                        ->inRandomOrder()
-                        ->get();
-
+                ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                ->inRandomOrder()
+                ->get();
         } else {
 
             $result = Annonce::with('user', 'service')
-                        ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-                        ->inRandomOrder()
-                        ->get(); 
+                ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                ->inRandomOrder()
+                ->get();
         }
 
         return view('recherche', ['ville' => $ville, 'service' => $service, 'result' => $result]);
@@ -477,5 +487,45 @@ class AdminController extends Controller
         ]);
     }
 
-    
+    //page Ajout service
+    public function addservice()
+    {
+        $service = DB::table('services')->paginate(4);
+        return view('admin.ajout-service', ['service' => $service]);
+    }
+
+    public function addservices(Request $request)
+    {
+
+        $request->validate([
+            'service' => 'required'
+        ]);
+        $service = new service();
+        $service->name = $request['service'];
+        $service->save();
+        return redirect()->back();
+    }
+
+    public function deleteservice($id)
+    {
+
+        $delete = service::find($id);
+        $delete->delete();
+        $deleteA = Annonce::where('service_id', $id);
+        $deleteA->delete();
+        $deleteC = classment::where('service_id', $id);
+        $deleteC->delete();
+        $deleteU = User::where('service_id', $id);
+        $deleteU->delete();
+        return redirect()->back();
+    }
+
+
+
+    //Page villes
+    public function ville()
+    {
+        $ville = ville::all();
+        return view('admin.ville', ['ville' => $ville]);
+    }
 }

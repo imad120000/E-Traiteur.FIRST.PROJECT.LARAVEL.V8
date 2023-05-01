@@ -114,6 +114,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/utilisateur-document/{id}', [AdminController::class, 'deletecompte'])->name('deletecompte');
         Route::post('/utilisateur-document', [AdminController::class, 'recherche'])->name('recherche');
 
+        //Ajout service
+        Route::get('/ajout-service', [AdminController::class, 'addservice'])->name('addservice');
+        Route::post('/ajout-service', [AdminController::class, 'addservices'])->name('addservices');
+        Route::delete('/ajout-service/{id}', [AdminController::class, 'deleteservice'])->name('deleteservice');
+
+
+        //Page villes
+        Route::get('/ville', [AdminController::class, 'ville'])->name('ville');
+
+
+
+
+
 
 
 
