@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Awssat\Visits\Visits;
 
 class visit extends Model
 {
     use HasFactory;
-    use Visits;
 
     public function annonce(){
 

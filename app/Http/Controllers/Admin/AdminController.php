@@ -16,14 +16,15 @@ use App\Models\facture;
 use App\Models\recherchepage;
 use App\Models\service;
 use App\Models\ville;
+use App\Models\aide;
+use App\Models\apropos;
 use App\Models\visitplatforme;
 use App\Models\welcom;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
-use PHPUnit\Framework\ComparisonMethodDoesNotDeclareBoolReturnTypeException;
-use Torann\GeoIP\Facades\GeoIP;
+use DateTime;
+
 
 
 
@@ -442,55 +443,6 @@ class AdminController extends Controller
         return view('recherche', ['ville' => $ville, 'service' => $service]);
     }
 
-    //Page recherche
-    public function search(Request $request)
-    {
-        $ville = ville::all();
-        $service = service::all();
-        $recherche = recherchepage::firstOrNew(['id' => 1]);
-        $recherche->recordVisit();
-        $villeId = $request->input('ville', ''); // Get the ville id from the request, or set it as an empty string if it's not set
-        $serviceId = $request->input('service', ''); // Get the service id from the request, or set it as an empty string if it's not set
-
-        if (!empty($villeId) && !empty($serviceId)) {
-
-            $result = Annonce::where('ville_id', $villeId)
-                ->where('service_id', $serviceId)
-                ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-                ->inRandomOrder()
-                ->get();
-        } else if (!empty($villeId)) {
-
-            $result = Annonce::where('ville_id', $villeId)
-                ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-                ->inRandomOrder()
-                ->get();
-        } else if (!empty($serviceId)) {
-
-            $result = Annonce::where('service_id', $serviceId)
-                ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-                ->inRandomOrder()
-                ->get();
-        } else {
-
-            $result = Annonce::with('user', 'service')
-                ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
-                ->inRandomOrder()
-                ->get();
-        }
-
-        return view('recherche', ['ville' => $ville, 'service' => $service, 'result' => $result]);
-    }
-
-    //Page detail 
-    public function detail($id)
-    {
-        $annonce = Annonce::findOrFail($id);
-        return view('details', [
-            'annonce' => $annonce,
-        ]);
-    }
-
     //page Ajout service
     public function addservice()
     {
@@ -606,6 +558,71 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+     //Page recherche
+     public function search(Request $request)
+     {
+         $ville = ville::all();
+         $service = service::all();
+         $recherche = recherchepage::firstOrNew(['id' => 1]);
+         $recherche->recordVisit();
+         $villeId = $request->input('ville', ''); // Get the ville id from the request, or set it as an empty string if it's not set
+         $serviceId = $request->input('service', ''); // Get the service id from the request, or set it as an empty string if it's not set
+ 
+         if (!empty($villeId) && !empty($serviceId)) {
+ 
+             $result = Annonce::where('ville_id', $villeId)
+                 ->where('service_id', $serviceId)
+                 ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                 ->inRandomOrder()
+                 ->get();
+         } else if (!empty($villeId)) {
+ 
+             $result = Annonce::where('ville_id', $villeId)
+                 ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                 ->inRandomOrder()
+                 ->get();
+         } else if (!empty($serviceId)) {
+ 
+             $result = Annonce::where('service_id', $serviceId)
+                 ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                 ->inRandomOrder()
+                 ->get();
+         } else {
+ 
+             $result = Annonce::with('user', 'service')
+                 ->orderByRaw('CASE WHEN classment BETWEEN 1 AND 10 THEN classment END DESC')
+                 ->inRandomOrder()
+                 ->get();
+         }
+ 
+         return view('recherche', ['ville' => $ville, 'service' => $service, 'result' => $result]);
+     }
+ 
+     //Page detail 
+     public function detail($id)
+     {
+         $annonce = Annonce::findOrFail($id);
+         return view('details', [
+             'annonce' => $annonce,
+         ]);
+     }
+
+    //page Aide
+    
+    public function aide(){
+        $aide = aide::firstOrNew(['id' => 2]);
+        $aide->recordVisit();
+        return view('aide');
+    }
+
+      //page A propos de nous
+    
+      public function apropos(){
+        $apropos = apropos::firstOrNew(['id' => 3]);
+        $apropos->recordVisit();
+        return view('apropos');
+    }
+
     //Page statistiques 
     public function statistiques()
     {
@@ -617,6 +634,7 @@ class AdminController extends Controller
         $thisWeek = Carbon::now()->startOfWeek();
         $thisMonth = Carbon::now()->startOfMonth();
         $thisYear = Carbon::now()->startOfYear();
+
 
         $demandeactivation_today = User::where('compte', 0)->whereDate('created_at', $today)->count();
         $demandeactivation_yesterday = User::where('compte', 0)->whereDate('created_at', $yesterday)->count();
@@ -669,8 +687,12 @@ class AdminController extends Controller
         $total_today = visitplatforme::whereDate('created_at', $today)->count();
         $total_yesterday = visitplatforme::whereDate('created_at', $yesterday)->count();
         $total_thisweek = visitplatforme::whereBetween('created_at', [$thisWeek, Carbon::now()])->count();
-        $total_thismonth = visitplatforme::whereBetween('created_at', [$thisMonth, Carbon::now()])->count();
-        $total_thisyear = visitplatforme::whereBetween('created_at', [$thisYear, Carbon::now()])->count();
+        $total_thismonth = visitplatforme::whereBetween('created_at',  [$thisMonth, Carbon::now()])->count();
+        $thisYear = visitplatforme::whereBetween('created_at', [$thisYear, Carbon::now()])->count();
+
+        $total_thisyear = DB::table('visitplatformes')
+                    ->whereBetween('created_at', [$thisYear, Carbon::now()])
+                    ->count();
 
         //Filter By country
 
@@ -693,6 +715,7 @@ class AdminController extends Controller
             ->select('country', DB::raw('count(*) as visits_count'))
             ->whereBetween('created_at', [$thisMonth, Carbon::now()])
             ->get();
+           
 
         $visitsByCountry_thisyear = visitplatforme::groupBy('country')
             ->select('country', DB::raw('count(*) as visits_count'))
@@ -722,7 +745,7 @@ class AdminController extends Controller
             ->get();
 
         $devicevisit_thisyear = visitplatforme::groupBy('device_type')
-            ->select('device_type', DB::raw('count(*) as device_count'))
+            ->select('device_type', DB::raw('count(*) as device_year'))
             ->whereBetween('created_at', [$thisYear, Carbon::now()])
             ->get();
 
@@ -792,20 +815,11 @@ class AdminController extends Controller
                 'device_yesterday' => $devicevisit_yesterday,
                 'device_thisweek' => $devicevisit_thisweek,
                 'device_thismounth' => $devicevisit_thismonth,
-                'device_thisyear' => $devicevisit_thisyear
+                'device_thisyear' => $devicevisit_thisyear,
             ]
         );
     }
 
-    //page Aide
-    
-    public function aide(){
-        return view('aide');
-    }
 
-      //page A propos de nous
     
-      public function apropos(){
-        return view('apropos');
-    }
 }

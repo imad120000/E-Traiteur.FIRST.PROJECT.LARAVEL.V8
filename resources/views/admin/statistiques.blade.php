@@ -156,6 +156,7 @@
                           
                         </div>
                     </nav>
+
                     <div class="tab-content" id="states">
                         <div class="tab-pane fade show active" id="state-today" role="tabpanel"
                             aria-labelledby="nav-home-tab" tabindex="0">
@@ -165,6 +166,7 @@
                                         <div class="card-body text-center">
                                             <div class="card-title">Revenues</div>
                                             <div class="card-text h2">{{ $revenu_today }} MAD</div>
+                                          
                                         </div>
                                     </div>
 
@@ -251,7 +253,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="state-yesterday" role="tabpanel">
+                         <div class="tab-pane fade" id="state-yesterday" role="tabpanel">
                             <div class="row">
                                 <div class="col-lg-5">
                                     <div class="card mb-3 dashboard__navtabs-card">
@@ -614,7 +616,7 @@
                                                             @foreach ($device_thisyear as $d)
                                                                 <tr>
                                                                     <td>{{ $d->device_type }}</td>
-                                                                    <td>{{ $d->device_count }}</td>
+                                                                    <td>{{ $d->device_year }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </table>
@@ -625,7 +627,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                     </div>
                 </div>
         </main>

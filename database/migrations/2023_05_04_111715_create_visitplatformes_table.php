@@ -20,8 +20,8 @@ class CreateVisitplatformesTable extends Migration
             $table->string('ip_address');
             $table->string('country')->nullable();
             $table->string('city')->nullable();
-            $table->timestamps();
             $table->index(['visitplatforme_id', 'visitplatforme_type']);
+            $table->timestamps();
         });
     }
 
