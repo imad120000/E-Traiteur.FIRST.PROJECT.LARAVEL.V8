@@ -124,7 +124,7 @@
                             <li class="nav-item ms-0 ms-lg-auto"><a class="nav-link" href="{{route('aide')}}">Aide</a></li>
                             @if (auth('web')->check())
                                 <li class="nav-item"><a class="nav-link btn btn-cta"
-                                        href="{{ route('user.profile') }}">Dashboard</a>
+                                        href="{{ route('user.tableu') }}">Dashboard</a>
                                 </li>
                             @elseif (auth('admin')->check())
                                 <li class="nav-item"><a class="nav-link btn btn-cta"

@@ -106,7 +106,7 @@
                         </li>
                         @if (auth('web')->check())
                             <li class="nav-item"><a class="nav-link btn btn-cta"
-                                    href="{{ route('user.profile') }}">Dashboard</a>
+                                    href="{{ route('user.tableu') }}">Dashboard</a>
                             </li>
                         @elseif (auth('admin')->check())
                             <li class="nav-item"><a class="nav-link btn btn-cta"

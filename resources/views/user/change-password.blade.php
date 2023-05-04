@@ -18,59 +18,54 @@
     <aside class="dashboard__sidebar">
       <header class="border-bottom px-3 d-flex align-items-center justify-content-between">
         <span class="dashboard__logo">
-          etraiteur 
+          <img src="../assets/images/Logo wight.png" width="150"> 
         </span>
         <i class="ti-align-right h4 mb-0"></i>
       </header>
       <section class="dashboard__sidebar-nav">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="ps-3 nav-link active" aria-current="page" href="profile.html">
-              <i class="icon ti-layout"></i>
-              Tableau de bord
-            </a>
+              <a class="ps-3 nav-link " aria-current="page" href="{{ route('user.tableu') }}">
+                  <i class="icon ti-layout"></i>
+                  Tableau de bord
+              </a>
           </li>
           <li class="nav-item">
-            <a class="ps-3 nav-link" aria-current="page" href="services.html">
-              <i class="icon ti-money"></i>
-              Services
-            </a>
+              <a class="ps-3 nav-link" aria-current="page" href="{{ route('user.services') }}">
+                  <i class="icon ti-money"></i>
+                  Annonce
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="ps-3 nav-link" href="#demandes" data-bs-toggle="collapse" role="button"
+                  aria-expanded="false" aria-controls="demandes">
+                  <i class="icon ti-email"></i>
+                  Demandes
+                  <i class="ti-angle-down ms-auto"></i>
+              </a>
+              <div class="collapse dashboard__sidebar-collapse" id="demandes">
+                  <ul class="nav flex-column ps-3">
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ route('user.publicite') }}">
+                              Classment
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ route('user.demande') }}">
+                              Autre demande
+                          </a>
+                      </li>
+                  </ul>
+              </div>
           </li>
           <li class="nav-item">
-            <a class="ps-3 nav-link" aria-current="page" href="publicite.html">
-              <i class="icon ti-announcement"></i>
-              Publicité
-            </a>
+              <a class="ps-3 nav-link" href="{{ route('user.facture') }}">
+                  <i class="icon ti-receipt"></i>
+                  Factures
+              </a>
           </li>
-          <li class="nav-item">
-            <a class="ps-3 nav-link" href="#demandes" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="demandes">
-              <i class="icon ti-email"></i>
-              Demandes
-              <i class="ti-angle-down ms-auto"></i>
-            </a>
-            <div class="collapse dashboard__sidebar-collapse" id="demandes">
-              <ul class="nav flex-column ps-3">
-                <li class="nav-item">
-                  <a class="nav-link" href="ajout-service.html">Ajout d'un service</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="demande.html">Autre demande</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="ps-3 nav-link" href="statistiques.html">
-              <i class="icon ti-bar-chart"></i>
-              Statistiques
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="ps-3 nav-link" href="facture.html">
-              <i class="icon ti-receipt"></i>
-              Factures
-            </a>
-          </li>
+      </ul>
         </ul>
       </section>
     </aside>
@@ -84,7 +79,7 @@
               </button>
               <ul class="dropdown-menu dashboard__navbar-dropdown">
                 <li class="user">
-                  Monsieur <span class="user__name">{{auth()->user()->name}}</span>
+                  Bonjour <span class="user__name">{{auth()->user()->name}}</span>
                 </li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
@@ -94,7 +89,7 @@
                     Se Deconnecté</a>
                  <form action="{{ route('user.logout') }}" id="logout-form" method="post">@csrf</form> 
                 </li>
-                <li><a class="dropdown-item" href="change-password.html">
+                <li><a class="dropdown-item" href="{{route('user.changepassword')}}">
                   <i class="ti-key"></i>
                   Changer le mot de pass
                 </a></li>
