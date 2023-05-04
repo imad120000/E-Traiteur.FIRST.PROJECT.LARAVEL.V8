@@ -41,6 +41,7 @@
             width: 2rem;
             height: 2rem;
         }
+
         .btn-cta {
             border: solid #fff 1px;
             border-radius: 25px;
@@ -101,10 +102,34 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navBarCollapsable">
                     <ul class="navbar-nav w-100 align-items-center">
-                        <li class="nav-item ms-0 ms-lg-auto"><a class="nav-link" href="#">Aide</a></li>
-                        <li class="nav-item"><a class="nav-link btn btn-cta" href="{{ route('user.register') }}">Nous rejoindre</a>
+                        <li class="nav-item ms-0 ms-lg-auto"><a class="nav-link" href="{{ route('aide') }}">Aide</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#">Apropo de nous</a></li>
+                        @if (auth('web')->check())
+                            <li class="nav-item"><a class="nav-link btn btn-cta"
+                                    href="{{ route('user.profile') }}">Dashboard</a>
+                            </li>
+                        @elseif (auth('admin')->check())
+                            <li class="nav-item"><a class="nav-link btn btn-cta"
+                                    href="{{ route('admin.profile') }}">Dashboard</a>
+                            </li>
+                       
+                        @else
+                            <li class="nav-item"><a class="nav-link btn btn-cta" href="{{ route('user.register') }}">Nos
+                                    rejoindre</a>
+                            </li>
+                        @endif
+
+
+
+                        <li class="nav-item"><a class="nav-link" href="{{ route('apropos') }}">A propo de nous</a></li>
+                        @if (auth('web')->check() || auth('admin')->check() )
+                            <p hidden>lola</p>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.login') }}" data-translate='NavLogin'>Se
+                                    connecter</a>
+                            </li>
+                        @endif
                         <li class="nav-item dropdown-center me-0 me-lg-auto">
                             <a class="nav-link dropdown-toggle laguange__pref-choise" role="button" href="#"
                                 data-bs-toggle="dropdown" aria-expanded="false" id="currentLang" data-lang="fr">
@@ -250,25 +275,26 @@
         <section class="page__section">
 
             <div id="annonceCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner" style="height: 300px;width: 100%;text-align: center" >
-                        <?php
+                <div class="carousel-inner" style="height: 300px;width: 100%;text-align: center">
+                    <?php
                         foreach ($annonceadmin as $key => $photo) {
                             $image_url = asset('annonceadmin/' . $photo->image);
                             ?>
-                          <div class="carousel-item  <?php echo $key == 0 ? 'active' : ''; ?>" style="height: 300px;width: 100%;text-align: center" >
-                                  <img src="<?php echo $image_url; ?>" class="img-fluid carousel-image" alt="...">
-                                  <div class="carousel-caption d-none d-md-block">
-                                      <h5 class="slide__title"><strong>{{$photo->title}}</strong></h5>
-                                      <p class="slide__text">{{$photo->centenu}}</p>
-                                  </div>
-                          </div>
+                    <div class="carousel-item  <?php echo $key == 0 ? 'active' : ''; ?>"
+                        style="height: 300px;width: 100%;text-align: center">
+                        <img src="<?php echo $image_url; ?>" class="img-fluid carousel-image" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="slide__title"><strong>{{ $photo->title }}</strong></h5>
+                            <p class="slide__text">{{ $photo->centenu }}</p>
+                        </div>
+                    </div>
 
-                          <?php
+                    <?php
                         }
                         ?>
-                        
-                    </div>
-                
+
+                </div>
+
                 <button class="carousel-control-prev" type="button" data-bs-target="#annonceCarousel"
                     data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>

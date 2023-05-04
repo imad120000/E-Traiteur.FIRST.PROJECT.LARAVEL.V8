@@ -12,6 +12,10 @@ Route::get('/', [AdminController::class, 'home'])->name('home');
 Route::get('/recherche', [AdminController::class, 'searche'])->name('searche');
 Route::post('/recherche', [AdminController::class, 'search'])->name('search');
 Route::get('/details/{id}', [UserController::class, 'annonce'])->name('details');
+Route::get('/aide', [AdminController::class, 'aide'])->name('aide');
+Route::get('/apropos', [AdminController::class, 'apropos'])->name('apropos');
+
+
 
 
 //Envoyé message
@@ -124,6 +128,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/ville', [AdminController::class, 'ville'])->name('ville');
         Route::post('/ville', [AdminController::class, 'addville'])->name('addville');
         Route::delete('/ville/{id}', [AdminController::class, 'deleteville'])->name('deleteville');
+
+        //Statistique
+        Route::get('/statistiques', [AdminController::class, 'statistiques'])->name('statistiques');
+
 
 
 

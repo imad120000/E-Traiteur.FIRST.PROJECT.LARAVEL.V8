@@ -13,13 +13,18 @@ use App\Models\User;
 use App\Models\demande;
 use App\Models\message;
 use App\Models\facture;
+use App\Models\recherchepage;
 use App\Models\service;
 use App\Models\ville;
+use App\Models\visitplatforme;
+use App\Models\welcom;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\ComparisonMethodDoesNotDeclareBoolReturnTypeException;
+use Torann\GeoIP\Facades\GeoIP;
+
 
 
 class AdminController extends Controller
@@ -398,23 +403,18 @@ class AdminController extends Controller
             $result = User::where('ville_id', $request['ville'])
                 ->where('service_id', $request['service'])
                 ->paginate(1);
-
         } else if (isset($request['ville'])) {
 
             $result = User::where('ville_id', $request['ville'])
                 ->paginate(1);
-
         } else if (isset($request['service'])) {
 
             $result = User::where('service_id', $request['service'])
                 ->paginate(1);
-
         } else {
 
-            $result = User::with('service','ville')
-            ->paginate(1);
-
-            
+            $result = User::with('service', 'ville')
+                ->paginate(1);
         }
 
 
@@ -428,6 +428,9 @@ class AdminController extends Controller
         $ville = ville::all();
         $service = service::all();
         $annonceAdmin = AnnonceAdmin::all();
+        $welcome = welcom::firstOrNew(['id' => 1]);
+        $welcome->recordVisit();
+
         return view('welcome', ['ville' => $ville, 'service' => $service, 'annonceadmin' => $annonceAdmin]);
     }
 
@@ -444,7 +447,8 @@ class AdminController extends Controller
     {
         $ville = ville::all();
         $service = service::all();
-
+        $recherche = recherchepage::firstOrNew(['id' => 1]);
+        $recherche->recordVisit();
         $villeId = $request->input('ville', ''); // Get the ville id from the request, or set it as an empty string if it's not set
         $serviceId = $request->input('service', ''); // Get the service id from the request, or set it as an empty string if it's not set
 
@@ -509,11 +513,11 @@ class AdminController extends Controller
     public function deleteservice($id)
     {
 
-        $delete = service::find($id);  
-        $deleteA = Annonce::where('service_id', $id); 
-        $deleteC = classment::where('service_id', $id); 
+        $delete = service::find($id);
+        $deleteA = Annonce::where('service_id', $id);
+        $deleteC = classment::where('service_id', $id);
         $deleteU = User::where('service_id', $id);
-       
+
         if ($deleteU->exists()) {
             foreach ($deleteU->get() as $user) {
                 unlink(public_path('./cin1/') . $user->cinDocument1);
@@ -522,13 +526,13 @@ class AdminController extends Controller
                 unlink(public_path('./status/') . $user->statusDocument);
             }
         }
-        
+
         if ($deleteA->exists()) {
             foreach ($deleteA->get() as $annonce) {
                 if ($annonce->photo) {
                     $photos = json_decode($annonce->photo, true);
                     foreach ($photos as $photo) {
-                        $filePath = public_path('postimage').'/'.$photo;
+                        $filePath = public_path('postimage') . '/' . $photo;
                         if (file_exists($filePath)) {
                             unlink($filePath);
                         }
@@ -553,6 +557,7 @@ class AdminController extends Controller
         $ville = DB::table('villes')->paginate(4);
         return view('admin.ville', ['ville' => $ville]);
     }
+
     public function addville(Request $request)
     {
         $request->validate([
@@ -564,14 +569,12 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-
-
     public function deleteville($id)
     {
         $delete = ville::find($id);
         $deleteA = Annonce::where('ville_id', $id);
         $deleteU = User::where('ville_id', $id);
-        
+
         if ($deleteU->exists()) {
             foreach ($deleteU->get() as $user) {
                 unlink(public_path('./cin1/') . $user->cinDocument1);
@@ -580,13 +583,13 @@ class AdminController extends Controller
                 unlink(public_path('./status/') . $user->statusDocument);
             }
         }
-        
+
         if ($deleteA->exists()) {
             foreach ($deleteA->get() as $annonce) {
                 if ($annonce->photo) {
                     $photos = json_decode($annonce->photo, true);
                     foreach ($photos as $photo) {
-                        $filePath = public_path('postimage').'/'.$photo;
+                        $filePath = public_path('postimage') . '/' . $photo;
                         if (file_exists($filePath)) {
                             unlink($filePath);
                         }
@@ -595,12 +598,214 @@ class AdminController extends Controller
                 $annonce->delete();
             }
         }
-        
+
         $deleteU->delete();
         $deleteA->delete();
         $delete->delete();
-        
+
         return redirect()->back();
     }
 
+    //Page statistiques 
+    public function statistiques()
+    {
+
+        //statistique for les demandes
+
+        $today = Carbon::today();
+        $yesterday = Carbon::yesterday();
+        $thisWeek = Carbon::now()->startOfWeek();
+        $thisMonth = Carbon::now()->startOfMonth();
+        $thisYear = Carbon::now()->startOfYear();
+
+        $demandeactivation_today = User::where('compte', 0)->whereDate('created_at', $today)->count();
+        $demandeactivation_yesterday = User::where('compte', 0)->whereDate('created_at', $yesterday)->count();
+        $demandeactivation_thisWeek = User::where('compte', 0)->whereBetween('created_at', [$thisWeek, Carbon::now()])->count();;
+        $demandeactivation_thisMounth = User::where('compte', 0)->whereBetween('created_at', [$thisMonth, Carbon::now()])->count();
+        $demandeactivation_thisYear = User::where('compte', 0)->whereBetween('created_at', [$thisYear, Carbon::now()])->count();
+
+
+        $demande_today = demande::whereDate('created_at', $today)->count();
+        $demande_yesterday = demande::whereDate('created_at', $yesterday)->count();
+        $demande_thisWeek = demande::whereBetween('created_at', [$thisWeek, Carbon::now()])->count();
+        $demande_thisMonth = demande::whereBetween('created_at', [$thisMonth, Carbon::now()])->count();
+        $demande_thisYear = demande::whereBetween('created_at', [$thisYear, Carbon::now()])->count();
+
+        $demandeclassment_today = Classment::whereDate('created_at', $today)->count();
+        $demandeclassment_yesterday = Classment::whereDate('created_at', $yesterday)->count();
+        $demandeclassment_thisWeek = Classment::whereBetween('created_at', [$thisWeek, Carbon::now()])->count();
+        $demandeclassment_thisMonth = Classment::whereBetween('created_at', [$thisMonth, Carbon::now()])->count();
+        $demandeclassment_thisYear = Classment::whereBetween('created_at', [$thisYear, Carbon::now()])->count();
+
+        // i knew this not clean code bu i was hurry for finish this projet sorry
+        // voila la somme des demandes
+
+        $today_      =  $demandeactivation_today + $demande_today + $demandeclassment_today;
+        $yesterday_  =  $demandeactivation_yesterday + $demande_yesterday + $demandeclassment_yesterday;
+        $week_       =  $demandeactivation_thisWeek + $demande_thisWeek + $demandeclassment_thisWeek;
+        $mounth_     =  $demandeactivation_thisMounth +  $demande_thisMonth + $demandeclassment_thisMonth;
+        $year_       =  $demandeactivation_thisYear + $demande_thisYear + $demandeclassment_thisYear;
+
+        $total_demand = $demandeactivation_today + $demande_today + $demandeclassment_today +
+            $demandeactivation_yesterday + $demande_yesterday + $demandeclassment_yesterday +
+            $demandeactivation_thisWeek + $demande_thisWeek + $demandeclassment_thisWeek +
+            $demandeactivation_thisMounth + $demande_thisMonth + $demandeclassment_thisMonth +
+            $demandeactivation_thisYear + $demande_thisYear + $demandeclassment_thisYear;
+
+        //Statistique for the revenu
+        $revenu_today = facture::whereDate('created_at', $today)->sum('montant');
+        $revenu_yesterday = facture::whereDate('created_at', $yesterday)->sum('montant');
+        $revenu_thisweek = facture::whereBetween('created_at', [$thisWeek, Carbon::now()])->sum('montant');
+        $revenu_thismounth = facture::whereBetween('created_at', [$thisMonth, Carbon::now()])->sum('montant');
+        $revenu_thisyear = facture::whereBetween('created_at', [$thisYear, Carbon::now()])->sum('montant');
+
+        $revenu_all_years = facture::whereYear('created_at', '<=', date('Y'))->sum('montant');
+
+        $revenu_total = $revenu_all_years;
+
+
+        //Total visit
+
+        $total_today = visitplatforme::whereDate('created_at', $today)->count();
+        $total_yesterday = visitplatforme::whereDate('created_at', $yesterday)->count();
+        $total_thisweek = visitplatforme::whereBetween('created_at', [$thisWeek, Carbon::now()])->count();
+        $total_thismonth = visitplatforme::whereBetween('created_at', [$thisMonth, Carbon::now()])->count();
+        $total_thisyear = visitplatforme::whereBetween('created_at', [$thisYear, Carbon::now()])->count();
+
+        //Filter By country
+
+        $visitsByCountry_today = visitplatforme::groupBy('country')
+            ->select('country', DB::raw('count(*) as visits_count'))
+            ->whereDate('created_at', $today)
+            ->get();
+
+        $visitsByCountry_yesterday = visitplatforme::groupBy('country')
+            ->select('country', DB::raw('count(*) as visits_count'))
+            ->whereDate('created_at', $yesterday)
+            ->get();
+
+        $visitsByCountry_thisweek = visitplatforme::groupBy('country')
+            ->select('country', DB::raw('count(*) as visits_count'))
+            ->whereBetween('created_at', [$thisWeek, Carbon::now()])
+            ->get();
+
+        $visitsByCountry_thismonth = visitplatforme::groupBy('country')
+            ->select('country', DB::raw('count(*) as visits_count'))
+            ->whereBetween('created_at', [$thisMonth, Carbon::now()])
+            ->get();
+
+        $visitsByCountry_thisyear = visitplatforme::groupBy('country')
+            ->select('country', DB::raw('count(*) as visits_count'))
+            ->whereBetween('created_at', [$thisYear, Carbon::now()])
+            ->get();
+
+        //filter by Device
+
+        $devicevisit_today = visitplatforme::groupBy('device_type')
+            ->select('device_type', DB::raw('count(*) as device_count'))
+            ->whereDate('created_at', $today)
+            ->get();
+
+        $devicevisit_yesterday = visitplatforme::groupBy('device_type')
+            ->select('device_type', DB::raw('count(*) as device_count'))
+            ->whereDate('created_at', $yesterday)
+            ->get();
+
+        $devicevisit_thisweek = visitplatforme::groupBy('device_type')
+            ->select('device_type', DB::raw('count(*) as device_count'))
+            ->whereBetween('created_at', [$thisWeek, Carbon::now()])
+            ->get();
+
+        $devicevisit_thismonth = visitplatforme::groupBy('device_type')
+            ->select('device_type', DB::raw('count(*) as device_count'))
+            ->whereBetween('created_at', [$thisMonth, Carbon::now()])
+            ->get();
+
+        $devicevisit_thisyear = visitplatforme::groupBy('device_type')
+            ->select('device_type', DB::raw('count(*) as device_count'))
+            ->whereBetween('created_at', [$thisYear, Carbon::now()])
+            ->get();
+
+        return view(
+            'admin.statistiques',
+            [
+                //statistique les demandes
+
+                'today' => $today_,
+                'yesterday' => $yesterday_,
+                'week' => $week_,
+                'mounth' => $mounth_,
+                'year' => $year_,
+               
+
+                //statistique Revenu
+
+                'revenu_today' =>   $revenu_today,
+                'revenu_yesterday' =>   $revenu_yesterday,
+                'revenu_thisweek' =>   $revenu_thisweek,
+                'revenu_thismounth' =>   $revenu_thismounth,
+                'revenu_thisyear' =>   $revenu_thisyear,
+
+                //Demande par type
+
+                //Activation de compte
+
+                'demandeA_today' => $demandeactivation_today,
+                'demandeA_yesterday' => $demandeactivation_yesterday,
+                'demandeA_thisweek' => $demandeactivation_thisWeek,
+                'demandeA_thismounth' => $demandeactivation_thisMounth,
+                'demandeA_thisyear' => $demandeactivation_thisYear,
+
+                //Autre demande
+
+                'demande_today' => $demande_today,
+                'demande_yesterday' => $demande_yesterday,
+                'demande_thisweek' => $demande_thisWeek,
+                'demande_thismounth' => $demande_thisMonth,
+                'demande_thisyear' => $demande_thisYear,
+
+                //Classment
+                'demandeclassment_today' => $demandeclassment_today,
+                'demandeclassment_yesterday' => $demandeclassment_yesterday,
+                'demandeclassment_thisweek' => $demandeclassment_thisWeek,
+                'demandeclassment_thismounth' => $demandeclassment_thisMonth,
+                'demandeclassment_thisyear' => $demandeclassment_thisYear,
+
+                //visit
+
+                //Total visit
+                'total_today' => $total_today,
+                'total_yesterday' => $total_yesterday,
+                'total_thisweek' => $total_thisweek,
+                'total_thismounth' => $total_thismonth,
+                'total_thisyear' => $total_thisyear,
+
+                //filter by country
+                'country_today' => $visitsByCountry_today,
+                'country_yesterday' => $visitsByCountry_yesterday,
+                'country_thisweek' => $visitsByCountry_thisweek,
+                'country_thismounth' => $visitsByCountry_thismonth,
+                'country_thisyear' => $visitsByCountry_thisyear,
+
+                //filter by Device
+                'device_today' => $devicevisit_today,
+                'device_yesterday' => $devicevisit_yesterday,
+                'device_thisweek' => $devicevisit_thisweek,
+                'device_thismounth' => $devicevisit_thismonth,
+                'device_thisyear' => $devicevisit_thisyear
+            ]
+        );
+    }
+
+    //page Aide
+    
+    public function aide(){
+        return view('aide');
+    }
+
+      //page A propos de nous
+    
+      public function apropos(){
+        return view('apropos');
+    }
 }

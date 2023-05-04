@@ -121,10 +121,31 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navBarCollapsable">
                         <ul class="navbar-nav w-100 align-items-center">
-                            <li class="nav-item ms-0 ms-lg-auto"><a class="nav-link" href="#">Aide</a></li>
-                            <li class="nav-item"><a class="nav-link btn btn-cta"
-                                    href="{{ route('user.register') }}">Nous rejoindre</a>
-                            <li class="nav-item"><a class="nav-link" href="#">Apropo de nous</a></li>
+                            <li class="nav-item ms-0 ms-lg-auto"><a class="nav-link" href="{{route('aide')}}">Aide</a></li>
+                            @if (auth('web')->check())
+                                <li class="nav-item"><a class="nav-link btn btn-cta"
+                                        href="{{ route('user.profile') }}">Dashboard</a>
+                                </li>
+                            @elseif (auth('admin')->check())
+                                <li class="nav-item"><a class="nav-link btn btn-cta"
+                                        href="{{ route('admin.profile') }}">Dashboard</a>
+                                </li>
+                            @else
+                                <li class="nav-item"><a class="nav-link btn btn-cta"
+                                        href="{{ route('user.register') }}">Nos
+                                        rejoindre</a>
+                                </li>
+                            @endif
+                            <li class="nav-item"><a class="nav-link" href="{{ route('apropos') }}">A propo de nous</a>
+                            </li>
+                            @if (auth('web')->check() || auth('admin')->check())
+                                <p hidden>lola</p>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('user.login') }}" data-translate='NavLogin'>Se
+                                        connecter</a>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown-center me-0 me-lg-auto">
                                 <a class="nav-link dropdown-toggle laguange__pref-choise" role="button" href="#"
                                     data-bs-toggle="dropdown" aria-expanded="false" id="currentLang" data-lang="fr">

@@ -45,6 +45,7 @@
             width: 2rem;
             height: 2rem;
         }
+
         .btn-cta {
             border: solid #fff 1px;
             border-radius: 25px;
@@ -93,8 +94,8 @@
         <section class="border-bottom border-3 border-primary">
             <nav class="navbar bg-primary navbar-expand-lg navbar-dark">
                 <div class="container">
-                    <a href="{{route('home')}}" class="navbar-brand fs-3">              
-                              <img src="../assets/images/Logo wight.png" width="150">
+                    <a href="{{ route('home') }}" class="navbar-brand fs-3">
+                        <img src="../assets/images/Logo wight.png" width="150">
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navBarCollapsable">
@@ -102,32 +103,55 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navBarCollapsable">
                         <ul class="navbar-nav w-100 align-items-center">
-                            <li class="nav-item ms-0 ms-lg-auto"><a class="nav-link" href="#">Aide</a></li>
-                            <li class="nav-item"><a class="nav-link btn btn-cta" href="{{ route('user.register') }}">Nous rejoindre</a>
-                                <li class="nav-item"><a class="nav-link" href="#">Apropo de nous</a></li>
-                                <li class="nav-item dropdown-center me-0 me-lg-auto">
-                                    <a class="nav-link dropdown-toggle laguange__pref-choise" role="button" href="#"
-                                        data-bs-toggle="dropdown" aria-expanded="false" id="currentLang" data-lang="fr">
-                                        <img class="border-white rounded-pill laguange_pref language_icon"
-                                            src="../assets/images/fr.png" alt="fr-flag">
-                                    </a>
-                                    <ul class="dropdown-menu laguange__pref-dropdown" id="otherLang">
-                                        <li>
-                                            <a class="dropdown-item laguange__pref-choise" onclick="langChange(this)"
-                                                href="#" data-lang="ar">
-                                                <img class="border-white rounded-pill laguange_pref language_icon"
-                                                    src="../assets/images/ar.png" alt="ar-flag">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item laguange__pref-choise" onclick="langChange(this)"
-                                                href="#" data-lang="en">
-                                                <img class="border-white rounded-pill laguange_pref language_icon"
-                                                    src="../assets/images/en.png" alt="en-flag">
-                                            </a>
-                                        </li>
-                                    </ul>
+                            <li class="nav-item ms-0 ms-lg-auto"><a class="nav-link" href="{{route('aide')}}">Aide</a></li>
+
+                            @if (auth('web')->check())
+                                <li class="nav-item"><a class="nav-link btn btn-cta"
+                                        href="{{ route('user.profile') }}">Dashboard</a>
                                 </li>
+                            @elseif (auth('admin')->check())
+                                <li class="nav-item"><a class="nav-link btn btn-cta"
+                                        href="{{ route('admin.profile') }}">Dashboard</a>
+                                </li>
+                            @else
+                                <li class="nav-item"><a class="nav-link btn btn-cta"
+                                        href="{{ route('user.register') }}">Nos
+                                        rejoindre</a>
+                                </li>
+                            @endif
+                            <li class="nav-item"><a class="nav-link" href="{{ route('apropos') }}">A propo de nous</a>
+                            </li>
+                            @if (auth('web')->check() || auth('admin')->check())
+                                <p hidden>lola</p>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('user.login') }}" data-translate='NavLogin'>Se
+                                        connecter</a>
+                                </li>
+                            @endif
+                            <li class="nav-item dropdown-center me-0 me-lg-auto">
+                                <a class="nav-link dropdown-toggle laguange__pref-choise" role="button" href="#"
+                                    data-bs-toggle="dropdown" aria-expanded="false" id="currentLang" data-lang="fr">
+                                    <img class="border-white rounded-pill laguange_pref language_icon"
+                                        src="../assets/images/fr.png" alt="fr-flag">
+                                </a>
+                                <ul class="dropdown-menu laguange__pref-dropdown" id="otherLang">
+                                    <li>
+                                        <a class="dropdown-item laguange__pref-choise" onclick="langChange(this)"
+                                            href="#" data-lang="ar">
+                                            <img class="border-white rounded-pill laguange_pref language_icon"
+                                                src="../assets/images/ar.png" alt="ar-flag">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item laguange__pref-choise" onclick="langChange(this)"
+                                            href="#" data-lang="en">
+                                            <img class="border-white rounded-pill laguange_pref language_icon"
+                                                src="../assets/images/en.png" alt="en-flag">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="nav-item ms-5">
                                 <ul class="nav">
                                     <li class="nav-item">
@@ -160,7 +184,7 @@
             <div class="pt-5">
                 <div class="container d-flex flex-column align-items-center py-5">
                     <h2 class="text-center fw-bold mb-3">Chercher un autre service ou une autre ville!</h2>
-                    <form class="d-flex w-75" action="{{route('search')}}" method="post">
+                    <form class="d-flex w-75" action="{{ route('search') }}" method="post">
                         @csrf
                         <div class="input-group">
                             <select name="ville" class="form-select custom-input bg-white text-primary">
@@ -177,7 +201,7 @@
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary rounded-0 px-5">Recherché</button>
-                    </form>               
+                    </form>
                 </div>
             </div>
 
@@ -193,7 +217,7 @@
             </p>
         </article>
         <div class="container pt-5">
-            <h3 class="text-center mt-5 h1 mb-4 fw-bold">Resultat de la recherche</h3>           
+            <h3 class="text-center mt-5 h1 mb-4 fw-bold">Resultat de la recherche</h3>
             @if ($result !== null)
                 @if ($result->isEmpty())
                     <p class="text-center">--------------------------------------------------------------</p>
@@ -203,11 +227,11 @@
                         Not Found
                     </h1>
                 @else
-                  
-                        <div class="row">
-                            @foreach ($result as $r)
+                    <div class="row">
+                        @foreach ($result as $r)
                             <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                                <a class="text-dark" style="text-decoration: none;" href="{{route('details',$r->id)}}">
+                                <a class="text-dark" style="text-decoration: none;"
+                                    href="{{ route('details', $r->id) }}">
                                     <div class="card p-2 custom-card ">
                                         <div class="mb-2 d-flex justify-content-center">
                                             <img class="modal-thumb"
@@ -224,9 +248,9 @@
                                     </div>
                                 </a>
                             </div>
-                            @endforeach
-                        </div>
-                   
+                        @endforeach
+                    </div>
+
                 @endif
             @else
                 <p class="text-center">--------------------------------------------------------------</p>
