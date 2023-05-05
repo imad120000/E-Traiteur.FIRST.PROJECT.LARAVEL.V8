@@ -214,9 +214,14 @@ class UserController extends Controller
         $add = $request->validate([
             'des' => 'required',
             'video' => 'required',
-            'photo' => 'required|',
+            'photo' => 'required|max:1024',
 
-        ]);
+        ]/* , [
+            'des.exists' => 'decription de post Required',
+            'video.exists' => 'Video de post Required',
+            'photo.exists' => 'IMAGE depassé 1 MB',
+            
+        ] */);
 
         //check the file 
 

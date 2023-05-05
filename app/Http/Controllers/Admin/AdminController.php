@@ -39,7 +39,7 @@ class AdminController extends Controller
             'password' => 'required|min:5|max:30'
         ], [
             'email.exists' => 'This email Invalid',
-            'password.exists' => 'This password Invalid'
+            
         ]);
 
 
