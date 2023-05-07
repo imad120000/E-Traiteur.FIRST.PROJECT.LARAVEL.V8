@@ -18,6 +18,7 @@ class apropos extends Model
     {
         return $this->morphMany(Visitplatforme::class, 'visitplatforme');
     }
+    
     public function recordVisit()
     {
         //$ipAddress = '66.102.0.0';
