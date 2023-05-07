@@ -102,6 +102,11 @@
         <main class="dashboard__main">
             <nav class="dashboard__navbar">
                 <div class="container-fluid">
+                    <button class="btn btn-primary"  role="button"
+                        data-bs-toggle="modal" data-bs-target="#add-service">
+                        <i class="ti-plus"></i>
+                        Ajouter un Ville
+                    </button>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown ms-auto">
                             <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown"

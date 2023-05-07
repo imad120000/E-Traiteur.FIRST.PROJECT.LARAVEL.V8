@@ -23,9 +23,9 @@ class welcom extends Model
     }
     public function recordVisit()
     {
-        //$ipAddress = '66.102.0.0';
+        $ipAddress = '105.71.19.31';
         //$ipAddress = request()->ip();
-        $ipAddress =rand(1, 255).'.'.rand(1, 255).'.'.rand(1, 255).'.'.rand(1, 255);
+        //$ipAddress =rand(1, 255).'.'.rand(1, 255).'.'.rand(1, 255).'.'.rand(1, 255);
         $location = Location::get($ipAddress);
 
         // Get the user agent string from the request headers

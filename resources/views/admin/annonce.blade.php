@@ -101,6 +101,12 @@
         <main class="dashboard__main">
             <nav class="dashboard__navbar">
                 <div class="container-fluid">
+                    <div class="container">
+                        <button class="btn btn-primary"  role="button"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="ti-plus"></i>
+                        Ajouter un Annonce
+                    </button>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown ms-auto">
                             <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -133,7 +139,6 @@
             </nav>
             <!-- main content -->
             <div class="main__content">
-                <div class="container">
                     <h1 class="text-center dashboard__title">Vos annonce</h1>
                     <section class="dashboard__table-de-bord">
                         <article class="dashboard__table-de-bord-body">
