@@ -99,10 +99,9 @@
             </section>
         </aside>
         <main class="dashboard__main">
-            <nav class="dashboard__navbar">
+            <nav class="navbar py-0 dashboard__navbar">
                 <div class="container-fluid">
-                    <div class="container">
-                        <button class="btn btn-primary"  role="button"
+                    <button class="btn btn-primary rounded-0 d-flex align-items-center" role="button"
                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i class="ti-plus"></i>
                         Ajouter un Annonce
@@ -125,7 +124,8 @@
                                         onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                         <i class="ti-shift-right"></i>
                                         Se Deconnecté</a>
-                                    <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf
+                                    <form action="{{ route('admin.logout') }}" id="logout-form" method="post">
+                                        @csrf
                                     </form>
                                 </li>
                                 <li><a class="dropdown-item" href="">
@@ -135,60 +135,59 @@
                             </ul>
                         </li>
                     </ul>
-                </div>
+
             </nav>
             <!-- main content -->
             <div class="main__content">
-                    <h1 class="text-center dashboard__title">Vos annonce</h1>
-                    <section class="dashboard__table-de-bord">
-                        <article class="dashboard__table-de-bord-body">
-                            <table class="table table-bordered dashboard__tdb-table">
-                                <thead>
-                                    <tr class="text-center">
-                                        <td>Titre</td>
-                                        <td>Date de création</td>
-                                        <td>Action</td>
+                <h1 class="text-center dashboard__title">Vos annonce</h1>
+                <section class="dashboard__table-de-bord">
+                    <article class="dashboard__table-de-bord-body">
+                        <table class="table table-bordered dashboard__tdb-table">
+                            <thead>
+                                <tr class="text-center">
+                                    <td>Titre</td>
+                                    <td>Date de création</td>
+                                    <td>Action</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($annonce as $a)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="table__img-container me-2">
+                                                    <img class="table__img"
+                                                        src="{{ asset('annonceadmin/' . $a->image) }}" width="80px"
+                                                        style="background-size: cover" alt="">
+                                                </div>
+                                                <p class="table__description">
+                                                    {{ $a->title }}
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td class="text-center pt-4">
+                                            {{ $a->created_at }}
+                                        </td>
+                                        <td class="pt-3">
+                                            <div class="d-flex justify-content-center">
+                                                <a class="btn dashboard__tdb-btn" data-bs-toggle="modal"
+                                                    data-bs-target="#editModal{{ $a->id }}">
+                                                    <i class="ti-pencil"></i>
+                                                </a>
+                                                <a class="btn dashboard__tdb-btn" href="#"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#confirmModal{{ $a->id }}">
+                                                    <i class="ti-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($annonce as $a)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="table__img-container me-2">
-                                                        <img class="table__img"
-                                                            src="{{ asset('annonceadmin/' . $a->image) }}"
-                                                            width="80px" style="background-size: cover"
-                                                            alt="">
-                                                    </div>
-                                                    <p class="table__description">
-                                                        {{ $a->title }}
-                                                    </p>
-                                                </div>
-                                            </td>
-                                            <td class="text-center pt-4">
-                                                {{ $a->created_at }}
-                                            </td>
-                                            <td class="pt-3">
-                                                <div class="d-flex justify-content-center">
-                                                    <a class="btn dashboard__tdb-btn" data-bs-toggle="modal"
-                                                        data-bs-target="#editModal{{ $a->id }}">
-                                                        <i class="ti-pencil"></i>
-                                                    </a>
-                                                    <a class="btn dashboard__tdb-btn" href="#"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#confirmModal{{ $a->id }}">
-                                                        <i class="ti-trash"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </article>
-                    </section>
-                </div>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </article>
+                </section>
+            </div>
             </div>
 
 

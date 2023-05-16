@@ -100,7 +100,7 @@
             </section>
         </aside>
         <main class="dashboard__main">
-            <nav class="dashboard__navbar">    
+            <nav class="navbar py-0 dashboard__navbar">    
                 <div class="container-fluid">
                     <button class="btn btn-primary"  role="button"
                         data-bs-toggle="modal" data-bs-target="#add-service">
